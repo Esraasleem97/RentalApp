@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
+import {GlobalStyle} from '../Style/GlobalStyle'
 
 export default class Home extends Component {
     constructor(props) {
@@ -103,7 +104,7 @@ export default class Home extends Component {
         ]
         return (
 
-            <View style={styles.body}>
+            <View style={GlobalStyle.body}>
 
                 <View>
                     {/*<Text style={{color: '#fff', fontSize: 25}}>Car Rental</Text>*/}
@@ -112,9 +113,9 @@ export default class Home extends Component {
                     {/*/>*/}
                 </View>
 
-                <SafeAreaView style={styles.container}>
+                <SafeAreaView style={GlobalStyle.container}>
 
-                    <View style={styles.content}>
+                    <View style={GlobalStyle.content}>
                         <ScrollView>
                             <View style={styles.input}>
                                 <TextInput
@@ -135,9 +136,11 @@ export default class Home extends Component {
                             </ScrollView>
                             {/*<Text style={styles.title}>Booking Car Now </Text>*/}
                             <View style={styles.tabs}>
-                                <TouchableOpacity><Text style={styles.tab}>Recently Arrived</Text></TouchableOpacity>
-                                <TouchableOpacity><Text style={styles.tab}>Latest Cars</Text></TouchableOpacity>
                                 <TouchableOpacity><Text style={[styles.tab, styles.active]}>All Cars</Text></TouchableOpacity>
+                                <TouchableOpacity><Text style={styles.tab}>Latest Cars</Text></TouchableOpacity>
+                                <TouchableOpacity><Text style={styles.tab}>Recently Arrived</Text></TouchableOpacity>
+
+
                             </View>
                             <SafeAreaView style={styles.section_pro}>
                                 {DATABASE.map((item) => {
@@ -153,7 +156,7 @@ export default class Home extends Component {
                                                 </View>
                                                 <View
                                                     style={{
-                                                        justifyContent: 'flex-end',
+                                                        justifyContent: 'flex-start',
                                                         width: "100%",
                                                         paddingHorizontal: 10
                                                     }}>
@@ -167,7 +170,7 @@ export default class Home extends Component {
 
                                                 </View>
                                                 <View style={{
-                                                    flexDirection: 'row-reverse',
+                                                    flexDirection: 'row',
                                                     justifyContent: 'space-between',
                                                     width: "100%",
                                                     paddingHorizontal: 10,
@@ -213,46 +216,14 @@ export default class Home extends Component {
     }
 }
 const styles = StyleSheet.create({
-    body: {
-        width: '100%',
-        height: "100%",
-        backgroundColor: '#1960d8',
 
-
-
-    },
-    header: {
-        height: 20,
-        flexDirection: 'row-reverse',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20
-    },
-    img_profile: {
-        width: 50,
-        height: 50,
-        borderRadius: 100
-    },
-    container: {
-        height: '100%',
-        alignItems: 'center',
-        backgroundColor: '#eef5ff',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        overflow: 'hidden',
-        marginTop: 20,
-    },
-    content: {
-        width: '100%',
-        marginTop: 5,
-    },
     input: {
         borderWidth: 1,
         borderRadius: 20,
         borderColor: '#fff',
         backgroundColor: '#fff',
         width: '90%',
-        flexDirection: 'row-reverse',
+        flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
@@ -334,7 +305,7 @@ const styles = StyleSheet.create({
     },
     star: {
         width: '65%',
-        alignSelf: "flex-end",
+        alignSelf: "flex-start",
         paddingBottom: 5,
         paddingHorizontal: 5
     },

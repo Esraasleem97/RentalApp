@@ -1,28 +1,20 @@
 import React from "react";
-import {createStackNavigator} from '@react-navigation/stack';
+import {Button, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import Home from "../Screen/Home";
 import Splash from "../Screen/Splash";
 import Details from "../Screen/Details";
-import {Image, StyleSheet, Text, View} from "react-native";
 import Login from "../Screen/Login";
-
+import Register from "../Screen/Register";
+import {createStackNavigator} from '@react-navigation/stack';
+import Profile from "../Screen/Profile";
+import {useNavigation} from "@react-navigation/native";
 const Stack = createStackNavigator();
-
-const Header =() => {
+function Header ()  {
+    const navigation = useNavigation()
     return (
-        <View style={styles.header}>
-            <Image style={styles.img_profile}
-                   source={require('../../assets/avatar-2.png')}
-            />
-            <Text style={{color: '#fff', fontSize: 25}}>Car Rental</Text>
-        </View>
-    )
-}
-const LoginHeader =() => {
-    return (
-        <View style={styles.header}>
-            <Text style={{color: '#fff', fontSize: 25}}>Login</Text>
-        </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <Image style={styles.img_profile} source={require('../../assets/avatar-2.png')}/>
+            </TouchableOpacity>
     )
 }
 
@@ -32,28 +24,39 @@ const StackNav = () => {
                 <Stack.Screen name="Splash" component={Splash} headerShown={false}
                 />
                 <Stack.Screen name="Login" component={Login} options={{
-                    headerTitle: props => <LoginHeader {...props} />,
-                    headerBackground: () => (
-                        <View  style={styles.header} />
-                    ),
+                    headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
+                    headerTitleStyle:{fontSize:25},
                     headerTintColor : '#fff'
                 }}
                 />
+                <Stack.Screen name="Register" component={Register} options={{
+                    headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
+                    headerTitleStyle:{fontSize:25},
+                    headerTintColor : '#fff'
+                }}
+                />
+
                 <Stack.Screen name="Home" component={Home}
                               options={{
-                                  headerTitle: props => <Header {...props} />,
-                                  headerBackground: () => (
-                                      <View  style={styles.header} />
-                                  ),
+                                  headerRight: props => <Header {...props} />,
+                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
+                                  headerTitleStyle:{fontSize:22,marginHorizontal:-20},
                                   headerTintColor : '#fff'
                               }}
                 />
                 <Stack.Screen name="Details" component={Details}
                               options={{
-                                  headerTitle: props => <Header {...props} />,
-                                  headerBackground: () => (
-                                      <View  style={styles.header} />
-                                  ),
+                                  headerRight: props => <Header {...props} />,
+                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
+                                  headerTitleStyle:{fontSize:22,marginHorizontal:-20},
+                                  headerTintColor : '#fff'
+                              }}
+                />
+                <Stack.Screen name="Profile" component={Profile}
+                              options={{
+                                  headerRight: props => <Header {...props} />,
+                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
+                                  headerTitleStyle:{fontSize:22,marginHorizontal:-20},
                                   headerTintColor : '#fff'
                               }}
                 />
@@ -63,20 +66,11 @@ const StackNav = () => {
 export default StackNav
 
 const styles = StyleSheet.create({
-    header: {
-        height: 70,
-        width: '100%',
-        flexDirection: 'row-reverse',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#1960d8',
-        paddingTop:20
 
-    },
     img_profile: {
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         borderRadius: 100,
-        marginHorizontal:10
+        marginHorizontal:30
     },
 })
