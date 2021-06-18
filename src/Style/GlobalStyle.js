@@ -25,5 +25,12 @@ export const GlobalStyle = StyleSheet.create({
         marginVertical:15,
         flexDirection:'row',
         alignItems:'center'
-    }
+    },
+    border:{
+        borderTopWidth: 1,
+        borderTopColor:'#cecaca',
+        width:30,
+        marginHorizontal:5
+
+    },
 });
