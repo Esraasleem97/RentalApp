@@ -4,8 +4,8 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity,
 import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
 
 
-export default function  Register() {
-        const {navigation} = this.props
+export default function  Register({navigation}) {
+
         return (
             <SafeAreaView style={styles.body}>
                 <View style={styles.container}>

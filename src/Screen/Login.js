@@ -41,8 +41,7 @@ import {GlobalStyle} from "../Style/GlobalStyle";
 //         </View>
 //     )
 // }
-export default function  Login() {
-        const {navigation} = this.props
+export default function  Login({navigation}) {
         return (
             <SafeAreaView style={styles.body}>
                 <View style={styles.container}>

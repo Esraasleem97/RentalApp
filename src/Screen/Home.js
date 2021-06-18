@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {
     ScrollView,
     View,
@@ -13,22 +13,11 @@ import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 
-export default class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            starCount: 2.5
-        };
-    }
-    onStarRatingPress(rating) {
-        this.setState({
-            starCount: rating
-        });
-    }
-
-
-    render() {
-        // const [navigation] =this.props;
+export default function Home ({navigation}) {
+        const [starCount,setStarCount] =useState(2.5);
+        const onStarRatingPress = (rating) => {
+            setStarCount(rating);
+        }
         const DATATYPE = [
             {id: 1, icon: 'car-cog', name: 'cog'},
             {id: 2, icon: 'car-estate', name: 'estate'},
@@ -184,14 +173,14 @@ export default class Home extends Component {
                                                     <StarRating
                                                         disabled={false}
                                                         maxStars={5}
-                                                        rating={this.state.starCount}
-                                                        selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                                        rating={starCount}
+                                                        selectedStar={(rating) => onStarRatingPress(rating)}
                                                         fullStarColor={'orange'}
                                                         starSize={13}
                                                     />
                                                 </View>
                                                 <TouchableOpacity style={styles.btn}
-                                                                  onPress={() => this.props.navigation.navigate('Details')}>
+                                                                  onPress={() => navigation.navigate('Details')}>
 
                                                     <Text
                                                         style={{color: '#1960d8', fontSize: 12}}
@@ -213,7 +202,7 @@ export default class Home extends Component {
             </View>
 
         );
-    }
+
 }
 const styles = StyleSheet.create({
 
