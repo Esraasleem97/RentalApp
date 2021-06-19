@@ -41,8 +41,7 @@ import {GlobalStyle} from "../Style/GlobalStyle";
 //         </View>
 //     )
 // }
-export default function  Login() {
-        const {navigation} = this.props
+export default function  Login({navigation}) {
         return (
             <SafeAreaView style={styles.body}>
                 <View style={styles.container}>
@@ -80,9 +79,9 @@ export default function  Login() {
                             <Text style={{color: '#1960d8', paddingHorizontal: 5}}>Create Account</Text>
                         </TouchableOpacity>
                         <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                            <View style={styles.border} ></View>
+                            <View style={GlobalStyle.border} ></View>
                             <Text>OR Register : </Text>
-                            <View style={styles.border} ></View>
+                            <View style={GlobalStyle.border} ></View>
                         </View>
 
                         <View style={GlobalStyle.icon}>
@@ -169,11 +168,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20
     },
-    border:{
-        borderTopWidth: 1,
-        borderTopColor:'#cecaca',
-        width:30,
-        marginHorizontal:5
 
-    },
 });

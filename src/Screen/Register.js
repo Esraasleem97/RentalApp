@@ -2,10 +2,11 @@ import React, {Component} from "react";
 import SvgUri from "expo-svg-uri";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
+import {GlobalStyle} from "../Style/GlobalStyle";
 
 
-export default function  Register() {
-        const {navigation} = this.props
+export default function  Register({navigation}) {
+
         return (
             <SafeAreaView style={styles.body}>
                 <View style={styles.container}>
@@ -45,8 +46,12 @@ export default function  Register() {
                             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
                                 <Text style={styles.btn_text}>Register</Text>
                             </TouchableOpacity>
-                            <Text>or register by : </Text>
-                            <View style={styles.icon}>
+                            <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
+                                <View style={GlobalStyle.border} ></View>
+                                <Text>OR Register : </Text>
+                                <View style={GlobalStyle.border} ></View>
+                            </View>
+                            <View style={GlobalStyle.icon}>
                             <TouchableOpacity>
                                 <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
                             </TouchableOpacity>
@@ -128,9 +133,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20
     },
-    icon : {
-        marginVertical:15,
-        flexDirection:'row-reverse',
-        alignItems:'center'
-    }
+
 });
