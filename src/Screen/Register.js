@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import SvgUri from "expo-svg-uri";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
@@ -47,9 +47,9 @@ export default function  Register({navigation}) {
                                 <Text style={styles.btn_text}>Register</Text>
                             </TouchableOpacity>
                             <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                                <View style={GlobalStyle.border} ></View>
+                                <View style={GlobalStyle.border} />
                                 <Text>OR Register : </Text>
-                                <View style={GlobalStyle.border} ></View>
+                                <View style={GlobalStyle.border} />
                             </View>
                             <View style={GlobalStyle.icon}>
                             <TouchableOpacity>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    StatusBar,
     TextInput,
     Animated,
 } from 'react-native';
@@ -45,7 +44,7 @@ export default class FloatingLabelInput extends Component {
     handleFocus = () => this.setState({ isFocused: true });
     handleBlur = () => this.setState({ isFocused: false });
 
-    componentDidUpdate () {
+    componentDidUpdate() {
         Animated.timing(this._animatedIsFocused, {
             toValue: (this.state.isFocused || this.props.value !== '') ? 1 : 0,
             duration: 200,

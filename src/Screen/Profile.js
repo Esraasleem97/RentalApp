@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 
-import {Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {Ionicons,MaterialCommunityIcons} from '@expo/vector-icons';
+import {Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {FormStyle} from "../Style/FormStyle";
 import FloatingLabelInput from "../Components/FloatingLabelInput";

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {SafeAreaView, Text, StyleSheet, View, Image, ScrollView, TouchableOpacity} from "react-native";
+import {SafeAreaView, Text, StyleSheet, View, ScrollView, TouchableOpacity} from "react-native";
 import {SliderBox} from "react-native-image-slider-box";
 import StarRating from "react-native-star-rating";
 import {FontAwesome5, SimpleLineIcons, MaterialCommunityIcons} from '@expo/vector-icons';

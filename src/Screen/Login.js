@@ -1,104 +1,121 @@
-import React, {Component} from "react";
+import React, {useEffect, useState} from "react";
 import SvgUri from "expo-svg-uri";
 import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from "../Style/GlobalStyle";
-//
-// const Page = ({navigation}) => {
-//     return (
-//         <View style={styles.container}>
-//             <View style={styles.content}>
-//
-//                 <SvgUri width="200" height="200"
-//                         source={require('../../assets/car-rent.svg')}
-//                 />
-//                 <View style={{flexDirection: 'row', marginBottom: 10, width: 200, justifyContent: 'space-between'}}>
-//                     <Ionicons name="code-working" size={15} color="#6e9ded"/>
-//                     <Ionicons name="cog" size={15} color="#6e9ded"/>
-//                     <Ionicons name="construct" size={15} color="#6e9ded"/>
-//                     <Ionicons name="speedometer" size={15} color="#6e9ded"/>
-//                     <Ionicons name="car" size={15} color="#6e9ded"/>
-//                 </View>
-//                 <Text style={styles.text}>Login</Text>
-//                 <View style={styles.form_control}>
-//                     <View style={styles.input}>
-//                         <TextInput placeholder='Username'/>
-//                     </View>
-//                     <View style={styles.input}>
-//                         <TextInput placeholder='Password'/>
-//                     </View>
-//                     <TouchableOpacity><Text style={{color: '#888'}}>Forget Password?</Text></TouchableOpacity>
-//                     <TouchableOpacity><Text style={{color: '#1960d8', paddingVertical: 10}}>Create
-//                         Account</Text></TouchableOpacity>
-//                 </View>
-//
-//             </View>
-//
-//             <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-//                 <Text style={styles.btn_text}>Login</Text>
-//             </TouchableOpacity>
-//
-//         </View>
-//     )
-// }
-export default function  Login({navigation}) {
-        return (
-            <SafeAreaView style={styles.body}>
-                <View style={styles.container}>
-                    <ScrollView>
+import {useDispatch, useSelector} from "react-redux";
+import Loader from "../Components/Loader";
+import Messages from "../Components/Messages";
+import {userLoginHandler} from "../Redux/actions/userActions";
+
+export default function Login(navigation) {
+
+    const [userName, setUserName] = useState('');
+
+    const [password, setPassword] = useState('');
+    console.log(1)
+
+    const dispatch = useDispatch()
+
+    const {userLogin} = useSelector((state) => state)
+
+    const {loading, error, user} = userLogin
+
+    useEffect(() => {
+        if (user && user.token) {
+            return navigation.navigate('Home')
+        }
+    }, [user])
+
+
+    const SubmitHandler = () => {
+        dispatch(userLoginHandler(userName, password))
+    }
+
+
+    return (
+
+
+        <SafeAreaView style={styles.body}>
+
+            <View style={styles.container}>
+
+                <ScrollView>
+                    {/*{error && <Messages children={error}/>}*/}
                     <View style={styles.content}>
-
-                            <SvgUri width="190" height="190"
-                                    source={require('../../assets/car-rent.svg')}
-                            />
-                            <View style={{flexDirection: 'row', marginBottom: 5, width: 200, justifyContent: 'space-between'}}>
-                                <Ionicons name="code-working" size={15} color="#6e9ded"/>
-                                <Ionicons name="cog" size={15} color="#6e9ded"/>
-                                <Ionicons name="construct" size={15} color="#6e9ded"/>
-                                <Ionicons name="speedometer" size={15} color="#6e9ded"/>
-                                <Ionicons name="car" size={15} color="#6e9ded"/>
+                        <SvgUri width="190" height="190"
+                                source={require('../../assets/car-rent.svg')}
+                        />
+                        <View style={{
+                            flexDirection: 'row',
+                            marginBottom: 5,
+                            width: 200,
+                            justifyContent: 'space-between'
+                        }}>
+                            <Ionicons name="code-working" size={15} color="#6e9ded"/>
+                            <Ionicons name="cog" size={15} color="#6e9ded"/>
+                            <Ionicons name="construct" size={15} color="#6e9ded"/>
+                            <Ionicons name="speedometer" size={15} color="#6e9ded"/>
+                            <Ionicons name="car" size={15} color="#6e9ded"/>
+                        </View>
+                        <Text style={styles.text}>Login</Text>
+                        <View style={styles.form_control}>
+                            <View style={styles.input}>
+                                <TextInput
+                                    placeholder='Username'
+                                    onChangeText={(value) => setUserName(value)}
+                                />
                             </View>
-                            <Text style={styles.text}>Login</Text>
-                            <View style={styles.form_control}>
-                                <View style={styles.input}>
-                                    <TextInput placeholder='Username'/>
-                                </View>
-                                <View style={styles.input}>
-                                    <TextInput placeholder='Password'/>
-                                </View>
-                                <TouchableOpacity><Text style={{color: '#888'}}>Forget Password?</Text></TouchableOpacity>
-
+                            <View style={styles.input}>
+                                <TextInput placeholder='Password'
+                                           onChangeText={(value) => setPassword(value)}
+                                />
                             </View>
+                            <TouchableOpacity><Text style={{color: '#888'}}>Forget Password?</Text></TouchableOpacity>
 
-                        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Home')}>
-                            <Text style={styles.btn_text}>Login</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={{flexDirection:'row',alignItems:'center'}} onPress={() => navigation.navigate('Register')} >
-                            <Text>Don't have an account?</Text>
-                            <Text style={{color: '#1960d8', paddingHorizontal: 5}}>Create Account</Text>
-                        </TouchableOpacity>
-                        <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                            <View style={GlobalStyle.border} ></View>
-                            <Text>OR Register : </Text>
-                            <View style={GlobalStyle.border} ></View>
                         </View>
 
-                        <View style={GlobalStyle.icon}>
-                            <TouchableOpacity>
-                                <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{marginHorizontal:10}}>
-                                <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
-                            </TouchableOpacity>
-                        </View>
+                        {loading
+                            ? <Loader/>
+                            :
+                            <View>
+                                <TouchableOpacity style={styles.button} onPress={SubmitHandler}>
+                                    <Text style={styles.btn_text}>Login</Text>
+                                </TouchableOpacity>
+
+
+                                <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}
+                                                  onPress={() => navigation.navigate('Register')}>
+                                    <Text>Don't have an account?</Text>
+                                    <Text style={{color: '#1960d8', paddingHorizontal: 5}}>Create Account</Text>
+                                </TouchableOpacity>
+
+
+                                <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                                    <View style={GlobalStyle.border}/>
+                                    <Text>OR Register : </Text>
+                                    <View style={GlobalStyle.border}/>
+                                </View>
+
+                                <View style={GlobalStyle.icon}>
+                                    <TouchableOpacity>
+                                        <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity style={{marginHorizontal: 10}}>
+                                        <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        }
+
+
                     </View>
-                    </ScrollView>
-                </View>
-            </SafeAreaView>
+                </ScrollView>
+            </View>
+        </SafeAreaView>
 
 
-        )
+    )
 
 }
 
@@ -155,7 +172,7 @@ const styles = StyleSheet.create({
 
     },
     button: {
-       marginBottom:20,
+        marginBottom: 20,
         paddingVertical: 13,
         backgroundColor: '#1960d8',
         width: '60%',
