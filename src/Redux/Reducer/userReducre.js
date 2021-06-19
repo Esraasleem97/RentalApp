@@ -10,6 +10,7 @@ import {
     USER_UPDATE_REQUESTS,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAILED,
+    USER_REFRESH
 
 }  from "../constants/userConstants.js";
 
@@ -23,7 +24,7 @@ import {
 export const userLoginReducer = (state = {}, action) => {
     switch (action.type) {
         case USER_LOGIN_REQUESTS:
-            return {loading: true}
+            return {loading: true , error: {}}
         case USER_LOGIN_SUCCESS:
             return {
                 loading: false,
@@ -34,10 +35,18 @@ export const userLoginReducer = (state = {}, action) => {
 
         case USER_LOGOUT:
             return {}
+
+        case USER_REFRESH:
+            return { }
         default:
             return state
     }
 }
+
+
+
+
+
 
 export const userRegisterReducer = (state = {}, action) => {
     switch (action.type) {

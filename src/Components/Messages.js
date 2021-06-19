@@ -1,21 +1,18 @@
 import React from 'react';
-import Alert from "react-native";
+import {Text, View} from "react-native";
 
-export const Message = ({variant, children, className}) => {
-
-
+export const Message = ({ children}) => {
     return (
-
-        <div className={className}>
-            <Alert variant={variant}>
+        <View >
+            <Text style={{color:'#e74545'}}>
                 {children}
-            </Alert>
-        </div>
+            </Text>
+        </View>
     );
 
 }
 Message.defaultProps = {
     variant: 'info',
-    className: ''
+
 }
 export default Message;

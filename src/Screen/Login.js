@@ -7,13 +7,13 @@ import {useDispatch, useSelector} from "react-redux";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
 import {userLoginHandler} from "../Redux/actions/userActions";
+import {USER_REFRESH} from "../Redux/constants/userConstants";
 
 export default function Login({navigation}) {
 
     const [userName, setUserName] = useState('');
 
     const [password, setPassword] = useState('');
-    console.log(1)
 
     const dispatch = useDispatch()
 
@@ -21,11 +21,16 @@ export default function Login({navigation}) {
 
     const {loading, error, user} = userLogin
 
+
     useEffect(() => {
+
+        dispatch({type: USER_REFRESH})
+
         if (user && user.token) {
             return navigation.navigate('Home')
         }
-    }, [user])
+
+    }, [user, dispatch])
 
 
     const SubmitHandler = () => {
@@ -41,7 +46,8 @@ export default function Login({navigation}) {
             <View style={GlobalStyle.container}>
 
                 <ScrollView>
-                    {/*{error && <Messages children={error}/>}*/}
+
+
                     <View style={styles.content}>
                         <SvgUri width="190" height="190"
                                 source={require('../../assets/car-rent.svg')}
@@ -61,17 +67,23 @@ export default function Login({navigation}) {
                         <Text style={styles.text}>Login</Text>
                         <View style={styles.form_control}>
                             <View style={styles.input}>
+
+
                                 <TextInput
                                     placeholder='Username'
                                     onChangeText={(value) => setUserName(value)}
                                 />
+                                {error && error.username && <Messages children={error.username}/>}
                             </View>
+
                             <View style={styles.input}>
+
                                 <TextInput placeholder='Password'
                                            onChangeText={(value) => setPassword(value)}
                                 />
+                                {error && error.password && <Messages children={error.password}/>}
                             </View>
-                            <TouchableOpacity><Text style={{color: '#888'}}>Forget Password?</Text></TouchableOpacity>
+
 
                         </View>
 
@@ -79,6 +91,11 @@ export default function Login({navigation}) {
                             ? <Loader/>
                             :
                             <View style={GlobalStyle.btn_container}>
+
+                                <TouchableOpacity>
+                                    <Text style={{color: '#2266af', alignSelf: 'center', marginBottom: 10}}>Forget
+                                        Password ?</Text></TouchableOpacity>
+
                                 <TouchableOpacity style={styles.button} onPress={SubmitHandler}>
                                     <Text style={styles.btn_text}>Login</Text>
                                 </TouchableOpacity>
