@@ -27,7 +27,7 @@ export default function Register({navigation}) {
 
         }))}
         else {
-            Alert.alert('Warning','Password not Matched')
+            Alert.alert('Warning','Confirm Password should be match with Password')
         }
         if (user && user.token) {
             navigation.navigate('Home')
