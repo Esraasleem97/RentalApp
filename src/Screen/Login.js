@@ -8,7 +8,7 @@ import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
 import {userLoginHandler} from "../Redux/actions/userActions";
 
-export default function Login(navigation) {
+export default function Login({navigation}) {
 
     const [userName, setUserName] = useState('');
 
@@ -36,9 +36,9 @@ export default function Login(navigation) {
     return (
 
 
-        <SafeAreaView style={styles.body}>
+        <SafeAreaView style={GlobalStyle.body}>
 
-            <View style={styles.container}>
+            <View style={GlobalStyle.container}>
 
                 <ScrollView>
                     {/*{error && <Messages children={error}/>}*/}
@@ -78,7 +78,7 @@ export default function Login(navigation) {
                         {loading
                             ? <Loader/>
                             :
-                            <View>
+                            <View style={GlobalStyle.btn_container}>
                                 <TouchableOpacity style={styles.button} onPress={SubmitHandler}>
                                     <Text style={styles.btn_text}>Login</Text>
                                 </TouchableOpacity>
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     },
     content: {
         alignItems: 'center',
+
     },
     form_control: {
         width: '80%',
