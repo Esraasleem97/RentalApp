@@ -21,12 +21,14 @@ export default function Register({navigation}) {
     const dispatch = useDispatch();
 
     const SubmitRegisterHandler = () => {
-
+        if(password === confirmPass) {
         dispatch(userRegisterHandler({
             username,email,phoneNumber,password,
 
-        }))
-
+        }))}
+        else {
+            Alert.alert('Warning','Password not Matched')
+        }
         if (user && user.token) {
             navigation.navigate('Home')
         }
