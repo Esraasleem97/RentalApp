@@ -14,6 +14,7 @@ import {
 
 import axios from "axios";
 import {API_PROTECTION, LOGIN} from "../../Api";
+import * as SecureStore from 'expo-secure-store';
 
 
 /**
@@ -43,7 +44,7 @@ export const userLoginHandler = (username, password) => async (dispatch) => {
             payload: data
         })
 
-        localStorage.setItem('user', JSON.stringify(data))
+        await SecureStore.setItemAsync('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
@@ -62,14 +63,16 @@ export const userLoginHandler = (username, password) => async (dispatch) => {
  * @returns {(function(*): Promise<void>)|*}
  */
 
-export const userRegisterHandler = (userData={}) => async (dispatch) => {
+export const userRegisterHandler = (userData = {}) => async (dispatch) => {
 
     try {
         dispatch({type: USER_REGISTER_REQUESTS})
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json' ,
+                'X-API-KEY': API_PROTECTION
+
             }
         }
 
@@ -87,7 +90,7 @@ export const userRegisterHandler = (userData={}) => async (dispatch) => {
         })
 
 
-        localStorage.setItem('user', JSON.stringify(data))
+        await SecureStore.setItemAsync('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
@@ -117,7 +120,8 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${LoggedInUser.token}`
+                'X-API-KEY': API_PROTECTION,
+                Authorization: `${LoggedInUser.token}`
             }
         }
 
@@ -130,7 +134,7 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
         })
 
 
-        localStorage.setItem('user', JSON.stringify(data))
+        await SecureStore.setItemAsync('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
@@ -149,9 +153,9 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
  * @returns {(function(*, *): void)|*}
  * @constructor
  */
-export const Logout = () => (dispatch) => {
+export const Logout = () => async (dispatch) => {
 
-    localStorage.removeItem('user')
+    await SecureStore.deleteItemAsync('user')
 
     dispatch({type: USER_LOGOUT})
 

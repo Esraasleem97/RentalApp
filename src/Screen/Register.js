@@ -23,8 +23,7 @@ export default function Register({navigation}) {
     const SubmitRegisterHandler = () => {
 
         dispatch(userRegisterHandler({
-            username,email,phoneNumber,password,
-
+            username,email,phoneNumber,password
         }))
 
         if (user && user.token) {
