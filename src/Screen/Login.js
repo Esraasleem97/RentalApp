@@ -27,7 +27,7 @@ export default function Login({navigation}) {
         dispatch({type: USER_REFRESH})
 
         if (user && user.token) {
-            return navigation.navigate('Home')
+            return navigation.replace('Home')
         }
 
     }, [user, dispatch])

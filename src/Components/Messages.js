@@ -1,10 +1,10 @@
 import React from 'react';
 import {Text, View} from "react-native";
 
-export const Message = ({ children}) => {
+export const Message = ({ children , color='#e74545'}) => {
     return (
         <View >
-            <Text style={{color:'#e74545'}}>
+            <Text style={{color}}>
                 {children}
             </Text>
         </View>

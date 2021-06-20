@@ -5,3 +5,5 @@ export const API_PROTECTION = 'mobile|23e324y98rf324zr33we233vgb8.5t66yyi4u.iu4r
 export const API = 'api/'
 
 export const LOGIN = URI + API + 'login'
+
+export const USER = URI + API + 'user';

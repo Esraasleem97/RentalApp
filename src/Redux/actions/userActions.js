@@ -9,11 +9,14 @@ import {
     USER_UPDATE_REQUESTS,
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAILED,
+    USER_TOKEN_REQUESTS,
+    USER_TOKEN_SUCCESS,
+    USER_TOKEN_FAILED
 
 } from "../constants/userConstants.js";
 
 import axios from "axios";
-import {API_PROTECTION, LOGIN} from "../../Api";
+import {API_PROTECTION, LOGIN, USER} from "../../Api";
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -43,8 +46,9 @@ export const userLoginHandler = (username, password) => async (dispatch) => {
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
+        await SecureStore.deleteItemAsync('user')
 
-        await SecureStore.setItemAsync('user', JSON.stringify(data))
+        await SecureStore.setItemAsync('user', data.token)
 
     } catch (e) {
         dispatch({
@@ -70,7 +74,7 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'application/json' ,
+                'Content-Type': 'application/json',
                 'X-API-KEY': API_PROTECTION
 
             }
@@ -89,8 +93,9 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
             payload: data
         })
 
+        await SecureStore.deleteItemAsync('user')
 
-        await SecureStore.setItemAsync('user', JSON.stringify(data))
+        await SecureStore.setItemAsync('user', data.token)
 
     } catch (e) {
         dispatch({
@@ -133,6 +138,7 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
             payload: data
         })
 
+        await SecureStore.deleteItemAsync('user')
 
         await SecureStore.setItemAsync('user', JSON.stringify(data))
 
@@ -147,6 +153,37 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
     }
 }
 
+
+export const checkToken = (token) => async (dispatch) => {
+    try {
+        dispatch({type: USER_TOKEN_REQUESTS})
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': API_PROTECTION,
+                Authorization: token  || null
+            }
+        }
+
+        const {data} = await axios.get(`${USER}`, config);
+
+        dispatch({
+            type: USER_TOKEN_SUCCESS,
+            payload: data
+        })
+
+    } catch (e) {
+        dispatch({
+            type: USER_TOKEN_FAILED,
+            payload: e.response && e.response.data.errors
+                ? e.response.data.errors
+                : e.message
+        })
+    }
+
+
+}
 
 /**
  *

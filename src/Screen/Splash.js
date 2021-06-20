@@ -1,32 +1,71 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SvgUri from "expo-svg-uri";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {Ionicons} from '@expo/vector-icons';
+import Loader from "../Components/Loader";
+import * as SecureStore from "expo-secure-store";
+import {checkToken} from "../Redux/actions/userActions";
+import {useDispatch, useSelector} from "react-redux";
+import Messages from "../Components/Messages";
 
 
-const Splash = ({ navigation }) => {
+const Splash = ({navigation}) => {
+
+    const dispatch = useDispatch()
+
+    const {userToken} = useSelector(state => state);
+
+    const {loading, user, error} = userToken
+
+    const checkTokenAsync = async () => {
+        let userToken;
+
+        try {
+            userToken = await SecureStore.getItemAsync('user')
+            return  await dispatch(checkToken(userToken));
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+    useEffect(() => {
+
+
+        checkTokenAsync().then(() => {
+
+            if (user && user.success) {
+                return navigation.replace('Home')
+            }
+            return navigation.replace('Login')
+        })
+
+
+    }, [dispatch, user]);
+
+
     return (
-    <View style={styles.container}>
-        <View style={styles.content}>
-            <Text style={{fontSize: 18}}>GET CAR DETAILS</Text>
-            <SvgUri width="250" height="250"
-                    source={require('../../assets/car-rent.svg')}
-            />
-            <View style={{flexDirection: 'row', marginBottom: 25, width: 200, justifyContent: 'space-between'}}>
-                <Ionicons name="code-working" size={15} color="#6e9ded"/>
-                <Ionicons name="cog" size={15} color="#6e9ded"/>
-                <Ionicons name="construct" size={15} color="#6e9ded"/>
-                <Ionicons name="speedometer" size={15} color="#6e9ded"/>
-                <Ionicons name="car" size={15} color="#6e9ded"/>
+        <View style={styles.container}>
+            <View style={styles.content}>
+                <Text style={{fontSize: 18}}>GET CAR DETAILS</Text>
+                <SvgUri width="250" height="250"
+                        source={require('../../assets/car-rent.svg')}
+                />
+                <View style={{flexDirection: 'row', marginBottom: 25, width: 200, justifyContent: 'space-between'}}>
+                    <Ionicons name="code-working" size={15} color="#6e9ded"/>
+                    <Ionicons name="cog" size={15} color="#6e9ded"/>
+                    <Ionicons name="construct" size={15} color="#6e9ded"/>
+                    <Ionicons name="speedometer" size={15} color="#6e9ded"/>
+                    <Ionicons name="car" size={15} color="#6e9ded"/>
+                </View>
+                <Text style={styles.text}>With the included booking form above the fold, everyone visiting your page
+                    can
+                    take action right away.</Text>
             </View>
-            <Text style={styles.text}>With the included booking form above the fold, everyone visiting your page can
-                take action right away.</Text>
+            {error && <Messages children={error} color='#fff'/>}
+            {loading && <Loader color='#fff'/>}
         </View>
-        <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.btn_text}>Get Started</Text>
-        </TouchableOpacity>
-    </View>
-    )};
+    )
+};
 
 export default Splash
 
@@ -39,13 +78,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     content: {
-        height: '90%',
+        marginTop: 50,
+        alignSelf: 'center',
+        height: '80%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#eef5ff',
-        borderBottomLeftRadius: 40,
-        borderBottomRightRadius: 40,
-
+        borderRadius: 30,
     },
     text: {
         color: '#555',
