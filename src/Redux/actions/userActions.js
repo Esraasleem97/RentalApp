@@ -87,13 +87,13 @@ export const userRegisterHandler = (userData={}) => async (dispatch) => {
         })
 
 
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
             type: USER_REGISTER_FAILED,
-            payload: e.response && e.response.data.message
-                ? e.response.data.message
+            payload: e.response && e.response.data.errors
+                ? e.response.data.errors
                 : e.message
         })
 
@@ -112,12 +112,12 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
     try {
         dispatch({type: USER_UPDATE_REQUESTS})
 
-        const {userLogin: {userInfo}} = getState()
+        const {userLogin: {user: LoggedInUser}} = getState()
 
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${userInfo.token}`
+                Authorization: `Bearer ${LoggedInUser.token}`
             }
         }
 
@@ -130,13 +130,13 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
         })
 
 
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
             type: USER_UPDATE_FAILED,
-            payload: e.response && e.response.data.message
-                ? e.response.data.message
+            payload: e.response && e.response.data.errors
+                ? e.response.data.errors
                 : e.message
         })
 
@@ -151,7 +151,8 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
  */
 export const Logout = () => (dispatch) => {
 
-    localStorage.removeItem('userInfo')
+    localStorage.removeItem('user')
+
     dispatch({type: USER_LOGOUT})
 
 }
