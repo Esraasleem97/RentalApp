@@ -62,21 +62,23 @@ export default function Login(navigation) {
                         <Text style={styles.text}>Login</Text>
                         <View style={styles.form_control}>
                             <View style={styles.input}>
-                                {error && error.username && <Messages children={error.username}/>}
+
 
                                 <TextInput
                                     placeholder='Username'
                                     onChangeText={(value) => setUserName(value)}
                                 />
+                                {error && error.username && <Messages children={error.username}/>}
                             </View>
 
                             <View style={styles.input}>
-                                {error && error.password && <Messages children={error.password}/>}
+
                                 <TextInput placeholder='Password'
                                            onChangeText={(value) => setPassword(value)}
                                 />
+                                {error && error.password && <Messages children={error.password}/>}
                             </View>
-                            <TouchableOpacity><Text style={{color: '#888'}}>Forget Password?</Text></TouchableOpacity>
+
 
                         </View>
 
@@ -84,6 +86,7 @@ export default function Login(navigation) {
                             ? <Loader/>
                             :
                             <View>
+                                <TouchableOpacity><Text style={{color: '#888' , alignSelf:'center'}}>Forget Password?</Text></TouchableOpacity>
                                 <TouchableOpacity style={styles.button} onPress={SubmitHandler}>
                                     <Text style={styles.btn_text}>Login</Text>
                                 </TouchableOpacity>
