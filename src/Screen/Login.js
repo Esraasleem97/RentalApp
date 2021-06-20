@@ -7,8 +7,9 @@ import {useDispatch, useSelector} from "react-redux";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
 import {userLoginHandler} from "../Redux/actions/userActions";
+import {USER_REFRESH} from "../Redux/constants/userConstants";
 
-export default function Login(navigation) {
+export default function Login({navigation}) {
 
     const [userName, setUserName] = useState('');
 
@@ -22,10 +23,14 @@ export default function Login(navigation) {
 
 
     useEffect(() => {
+
+        dispatch({type: USER_REFRESH})
+
         if (user && user.token) {
             return navigation.navigate('Home')
         }
-    }, [user])
+
+    }, [user, dispatch])
 
 
     const SubmitHandler = () => {
@@ -36,9 +41,9 @@ export default function Login(navigation) {
     return (
 
 
-        <SafeAreaView style={styles.body}>
+        <SafeAreaView style={GlobalStyle.body}>
 
-            <View style={styles.container}>
+            <View style={GlobalStyle.container}>
 
                 <ScrollView>
 
@@ -85,8 +90,12 @@ export default function Login(navigation) {
                         {loading
                             ? <Loader/>
                             :
-                            <View>
-                                <TouchableOpacity><Text style={{color: '#888' , alignSelf:'center'}}>Forget Password?</Text></TouchableOpacity>
+                            <View style={GlobalStyle.btn_container}>
+
+                                <TouchableOpacity>
+                                    <Text style={{color: '#2266af', alignSelf: 'center', marginBottom: 10}}>Forget
+                                        Password ?</Text></TouchableOpacity>
+
                                 <TouchableOpacity style={styles.button} onPress={SubmitHandler}>
                                     <Text style={styles.btn_text}>Login</Text>
                                 </TouchableOpacity>
@@ -146,6 +155,7 @@ const styles = StyleSheet.create({
     },
     content: {
         alignItems: 'center',
+
     },
     form_control: {
         width: '80%',

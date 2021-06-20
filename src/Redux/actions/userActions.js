@@ -18,12 +18,12 @@ import {API_PROTECTION, LOGIN} from "../../Api";
 
 /**
  *
- * @param email
+ * @param username
  * @param password
  * @returns {(function(*): Promise<void>)|*}
  * @constructor
  */
-export const userLoginHandler = (email, password) => async (dispatch) => {
+export const userLoginHandler = (username, password) => async (dispatch) => {
 
     try {
         dispatch({type: USER_LOGIN_REQUESTS})
@@ -35,7 +35,7 @@ export const userLoginHandler = (email, password) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.post(`${LOGIN}`, {email, password}, config);
+        const {data} = await axios.post(`${LOGIN}`, {username, password}, config);
 
 
         dispatch({
@@ -58,13 +58,11 @@ export const userLoginHandler = (email, password) => async (dispatch) => {
 
 /**
  *
- * @param name
- * @param email
- * @param password
+ * @param userData
  * @returns {(function(*): Promise<void>)|*}
- * @constructor
  */
-export const Register = (name, email, password) => async (dispatch) => {
+
+export const userRegisterHandler = (userData={}) => async (dispatch) => {
 
     try {
         dispatch({type: USER_REGISTER_REQUESTS})
@@ -75,7 +73,7 @@ export const Register = (name, email, password) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.post(`api/users`, {name, email, password}, config);
+        const {data} = await axios.post(`api/users`, userData, config);
 
 
         dispatch({

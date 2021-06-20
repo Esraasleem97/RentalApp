@@ -33,4 +33,8 @@ export const GlobalStyle = StyleSheet.create({
         marginHorizontal:5
 
     },
+    btn_container : {
+        width:'100%',
+        alignItems: 'center'
+    }
 });
