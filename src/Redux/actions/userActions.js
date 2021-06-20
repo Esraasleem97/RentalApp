@@ -13,7 +13,7 @@ import {
 } from "../constants/userConstants.js";
 
 import axios from "axios";
-
+import {API_PROTECTION, LOGIN} from "../../Api";
 
 
 /**
@@ -30,11 +30,12 @@ export const userLoginHandler = (email, password) => async (dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-API-KEY': API_PROTECTION
             }
         }
 
-        const {data} = await axios.post(`api/login`, {email, password}, config);
+        const {data} = await axios.post(`${LOGIN}`, {email, password}, config);
 
 
         dispatch({
@@ -47,8 +48,8 @@ export const userLoginHandler = (email, password) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: USER_LOGIN_FAILED,
-            payload: e.response && e.response.data.message
-                ? e.response.data.message
+            payload: e.response && e.response.data.errors
+                ? e.response.data.errors
                 : e.message
         })
 

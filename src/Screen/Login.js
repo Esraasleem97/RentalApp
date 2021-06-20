@@ -13,13 +13,13 @@ export default function Login(navigation) {
     const [userName, setUserName] = useState('');
 
     const [password, setPassword] = useState('');
-    console.log(1)
 
     const dispatch = useDispatch()
 
     const {userLogin} = useSelector((state) => state)
 
     const {loading, error, user} = userLogin
+
 
     useEffect(() => {
         if (user && user.token) {
@@ -41,7 +41,8 @@ export default function Login(navigation) {
             <View style={styles.container}>
 
                 <ScrollView>
-                    {/*{error && <Messages children={error}/>}*/}
+
+
                     <View style={styles.content}>
                         <SvgUri width="190" height="190"
                                 source={require('../../assets/car-rent.svg')}
@@ -61,12 +62,16 @@ export default function Login(navigation) {
                         <Text style={styles.text}>Login</Text>
                         <View style={styles.form_control}>
                             <View style={styles.input}>
+                                {error && error.username && <Messages children={error.username}/>}
+
                                 <TextInput
                                     placeholder='Username'
                                     onChangeText={(value) => setUserName(value)}
                                 />
                             </View>
+
                             <View style={styles.input}>
+                                {error && error.password && <Messages children={error.password}/>}
                                 <TextInput placeholder='Password'
                                            onChangeText={(value) => setPassword(value)}
                                 />
