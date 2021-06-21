@@ -34,11 +34,11 @@ export default function Login({navigation}) {
 
 
         if (getUser && getUser.success) {
-            navigation.replace('Home')
+            navigation.navigate('Home')
         }
 
         if (user && user.token){
-            navigation.replace('Home')
+            navigation.navigate('Home')
         }
     }, [dispatch, getUser , user])
 

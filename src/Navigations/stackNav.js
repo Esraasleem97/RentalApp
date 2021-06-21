@@ -8,6 +8,8 @@ import Register from "../Screen/Register";
 import {createStackNavigator} from '@react-navigation/stack';
 import Profile from "../Screen/Profile";
 import {useNavigation} from "@react-navigation/native";
+import DrawerNav from "./drawerNav";
+import {createDrawerNavigator, DrawerContent} from "@react-navigation/drawer";
 const Stack = createStackNavigator();
 function Header ()  {
     const navigation = useNavigation()
@@ -35,24 +37,25 @@ const StackNav = () => {
                     headerTitleStyle:{fontSize:25},
                     headerTintColor : '#fff'
                 }}/>
-                <Stack.Screen name="Home" component={Home} options={{
-                                  headerRight: props => <Header {...props} />,
-                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTitleStyle:{fontSize:22},
-                                  headerTintColor : '#fff'
-                              }}/>
-                <Stack.Screen name="Details" component={Details} options={{
-                                  headerRight: props => <Header {...props} />,
-                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTitleStyle:{fontSize:22},
-                                  headerTintColor : '#fff'
-                              }}/>
-                <Stack.Screen name="Profile" component={Profile} options={{
-                                  headerRight: props => <Header {...props} />,
-                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTitleStyle:{fontSize:22},
-                                  headerTintColor : '#fff'
-                              }}/>
+                {/*<Stack.Screen name="Home" component={Home} options={{*/}
+                {/*                  headerRight: props => <Header {...props} />,*/}
+                {/*                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},*/}
+                {/*                  headerTitleStyle:{fontSize:22},*/}
+                {/*                  headerTintColor : '#fff'*/}
+                {/*              }}/>*/}
+                {/*<Stack.Screen name="Details" component={Details} options={{*/}
+                {/*                  headerRight: props => <Header {...props} />,*/}
+                {/*                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},*/}
+                {/*                  headerTitleStyle:{fontSize:22},*/}
+                {/*                  headerTintColor : '#fff'*/}
+                {/*              }}/>*/}
+                {/*<Stack.Screen name="Profile" component={Profile} options={{*/}
+                {/*                  headerRight: props => <Header {...props} />,*/}
+                {/*                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},*/}
+                {/*                  headerTitleStyle:{fontSize:22},*/}
+                {/*                  headerTintColor : '#fff'*/}
+                {/*              }}/>*/}
+
             </Stack.Navigator>
     )
 }
