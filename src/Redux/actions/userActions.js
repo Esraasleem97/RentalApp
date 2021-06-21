@@ -115,7 +115,7 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
  * @returns {(function(*, *): Promise<void>)|*}
  * @constructor
  */
-export const UserUpdate = (user) => async (dispatch) => {
+export const UserUpdateHandler = (user) => async (dispatch) => {
 
     try {
         dispatch({type: USER_UPDATE_REQUESTS})

@@ -89,6 +89,7 @@ export default function Login({navigation}) {
                             <View style={styles.input}>
 
                                 <TextInput placeholder='Password'
+                                           secureTextEntry={true}
                                            onChangeText={(value) => setPassword(value)}
                                 />
                                 {error && error.password && <Messages children={error.password}/>}
