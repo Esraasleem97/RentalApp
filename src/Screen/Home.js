@@ -131,8 +131,6 @@ export default function Home({navigation}) {
                                 Cars</Text></TouchableOpacity>
                             <TouchableOpacity><Text style={styles.tab}>Latest Cars</Text></TouchableOpacity>
                             <TouchableOpacity><Text style={styles.tab}>Recently Arrived</Text></TouchableOpacity>
-
-
                         </View>
                         <SafeAreaView style={styles.section_pro}>
                             {DATABASE.map((item) => {
@@ -323,7 +321,7 @@ const styles = StyleSheet.create({
     bars: {
         position: 'absolute',
         right: 10,
-        bottom: 80,
+        bottom: 20,
         width:60,
         height:60,
         backgroundColor:'#1960d8',

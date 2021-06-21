@@ -19,6 +19,7 @@ export const GlobalStyle = StyleSheet.create({
     },
     content: {
         width: '100%',
+        marginBottom:60
 
     },
     icon : {

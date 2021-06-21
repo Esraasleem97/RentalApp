@@ -13,9 +13,9 @@ import {
 } from 'react-native-paper';
 
 import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
-import Login from "../Screen/Login";
+
 import Details from "../Screen/Details";
-import Register from "../Screen/Register";
+
 function Header ()  {
     const navigation = useNavigation()
 
@@ -93,6 +93,32 @@ function DrawerContent(props){
 
 
                     </Drawer.Section>
+                    <Drawer.Section style={styles.drawerSection}>
+                        <DrawerItem
+                            icon={({color, size}) => (
+                                <Icon
+                                    name="information-outline"
+                                    color={color}
+                                    size={size}
+                                />
+                            )}
+                            label="About us"
+                            onPress={() => {props.navigation.navigate('BookmarkScreen')}}
+                        />
+                        <DrawerItem
+                            icon={({color, size}) => (
+                                <Icon
+                                    name="phone"
+                                    color={color}
+                                    size={size}
+                                />
+                            )}
+                            label="Contact us"
+                            onPress={() => {props.navigation.navigate('BookmarkScreen')}}
+                        />
+
+
+                    </Drawer.Section>
 
                 </View>
             </DrawerContentScrollView>
@@ -117,11 +143,15 @@ export default function DrawerNav() {
     return (
 
             <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}
+
                               screenOptions={{
                                   headerShown :true,
                                   headerTitleStyle:{fontSize:22},
                                   headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTintColor : '#fff'
+                                  headerTintColor : '#fff',
+                                  backBehavior:true,
+                                  headerRight: props => <Header {...props} />,
+                                  drawerIcon:false
                               }}
             >
                 <Drawer.Screen name="Home" component={Home}/>
@@ -175,5 +205,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: 12,
         paddingHorizontal: 16,
+    },
+    img_profile: {
+        width: 45,
+        height: 45,
+        borderRadius: 100,
+        marginHorizontal:30
     },
 })
