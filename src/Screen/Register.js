@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SvgUri from "expo-svg-uri";
 import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
@@ -6,6 +6,9 @@ import {GlobalStyle} from "../Style/GlobalStyle";
 import {useSelector, useDispatch} from "react-redux";
 import {userRegisterHandler} from "../Redux/actions/userActions";
 import Loader from "../Components/Loader";
+import Messages from "../Components/Messages";
+import {USER_REFRESH} from "../Redux/constants/userConstants";
+import {FormStyle} from "../Style/FormStyle";
 
 
 export default function Register({navigation}) {
@@ -14,32 +17,39 @@ export default function Register({navigation}) {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPass, setConfirmPass] = useState('');
-    const {userRegister} = useSelector(state => state);
-    const {loading, user, error} = userRegister;
+    const [password, setPassword] = useState(null);
+    const [confirmPass, setConfirmPass] = useState(null);
+    const {userRegister} = useSelector((state) => state);
+    const {loading, error, user} = userRegister;
     const dispatch = useDispatch();
 
-    const SubmitRegisterHandler = () => {
-        if(password === confirmPass) {
-        dispatch(userRegisterHandler({
+    useEffect(() => {
 
-            username,email,phoneNumber,password,
+        dispatch({type: USER_REFRESH})
 
-        }))}
-        else {
-            Alert.alert('Warning','Confirm Password should be match with Password')
-        }
         if (user && user.token) {
-            navigation.navigate('Home')
+            return navigation.navigate('Home')
         }
+
+    }, [user, dispatch])
+    const SubmitRegisterHandler = () => {
+        if (password == null || confirmPass == null) {
+            return Alert.alert('Warning','Confirm Password OR Password can\'t be empty' )
+        }
+        if(password !== confirmPass ) {
+
+            return  Alert.alert('Warning','Confirm Password should be match with Password')
+        }
+        dispatch(userRegisterHandler({
+            username,email,phone_number:phoneNumber,password,
+        }))
 
     }
     return (
-        <SafeAreaView style={styles.body}>
-            <View style={styles.container}>
+        <SafeAreaView style={GlobalStyle.body}>
+            <View style={GlobalStyle.container}>
                 <ScrollView>
-                    <View style={styles.content}>
+                    <View style={FormStyle.content}>
 
                         <SvgUri width="190" height="190"
                                 source={require('../../assets/car-rent.svg')}
@@ -57,42 +67,49 @@ export default function Register({navigation}) {
                             <Ionicons name="car" size={15} color="#6e9ded"/>
                         </View>
                         <Text style={styles.text}>Register</Text>
-                        <View style={styles.form_control}>
-                            <View style={styles.input}>
+                        <View style={FormStyle.form_control}>
+                            <View style={FormStyle.input}>
                                 <TextInput placeholder='Username'
                                            onChangeText={(value) => setUsername(value)}
                                 />
+
                             </View>
-                            <View style={styles.input}>
+                            {error && error.username && <Messages children={error.username}/>}
+                            <View style={FormStyle.input}>
                                 <TextInput placeholder='Email'
                                            onChangeText={(value) => setEmail(value)}
                                 />
+
                             </View>
-                            <View style={styles.input}>
+                            {error && error.email && <Messages children={error.email}/>}
+                            <View style={FormStyle.input}>
                                 <TextInput placeholder='Phone Number'
                                            onChangeText={(value) => setPhoneNumber(value)}
                                 />
+
                             </View>
-                            <View style={styles.input}>
+                            {error && error.phone_number && <Messages children={error.phone_number}/>}
+                            <View style={FormStyle.input}>
                                 <TextInput placeholder='Password'
+                                           secureTextEntry={true}
                                            onChangeText={(value) => setPassword(value)}
                                 />
+
                             </View>
-                            <View style={styles.input}>
+                            {error && error.password && <Messages children={error.password}/>}
+                            <View style={FormStyle.input}>
                                 <TextInput placeholder='Confirm Password'
+                                           secureTextEntry={true}
                                            onChangeText={(value) => setConfirmPass(value)}/>
                             </View>
+                            {error && error.password && <Messages children={error.password}/>}
 
                         </View>
                         {loading ?
                             <Loader/>
                             :
                             <View style={GlobalStyle.btn_container}>
-                                <TouchableOpacity style={styles.button} onPress={
-                                    // () => navigation.navigate('Home')
-                                    SubmitRegisterHandler
-
-                                }>
+                                <TouchableOpacity style={styles.button} onPress={SubmitRegisterHandler}>
                                     <Text style={styles.btn_text}>Register</Text>
                                 </TouchableOpacity>
                                 <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
@@ -120,29 +137,8 @@ export default function Register({navigation}) {
 
 
 const styles = StyleSheet.create({
-    body: {
-        width: '100%',
-        height: "100%",
-        backgroundColor: '#1960d8',
-
-    },
-    container: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: '#eef5ff',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        overflow: 'hidden',
-        marginVertical: 5
-    },
     content: {
         alignItems: 'center',
-    },
-    form_control: {
-        width: '80%',
-        marginVertical: 12,
-        alignItems: 'center',
-
     },
     input: {
         width: '100%',

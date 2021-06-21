@@ -8,6 +8,7 @@ import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
 import {checkToken, userLoginHandler} from "../Redux/actions/userActions";
 import {USER_REFRESH} from "../Redux/constants/userConstants";
+import {FormStyle} from '../Style/FormStyle';
 
 export default function Login({navigation}) {
 
@@ -76,24 +77,24 @@ export default function Login({navigation}) {
                         </View>
                         <Text style={styles.text}>Login</Text>
                         <View style={styles.form_control}>
-                            <View style={styles.input}>
+                            <View style={FormStyle.input}>
 
 
                                 <TextInput
                                     placeholder='Username'
                                     onChangeText={(value) => setUserName(value)}
                                 />
-                                {error && error.username && <Messages children={error.username}/>}
-                            </View>
 
-                            <View style={styles.input}>
+                            </View>
+                            {error && error.username && <Messages children={error.username}/>}
+                            <View style={FormStyle.input}>
 
                                 <TextInput placeholder='Password'
                                            onChangeText={(value) => setPassword(value)}
                                 />
-                                {error && error.password && <Messages children={error.password}/>}
-                            </View>
 
+                            </View>
+                            {error && error.password && <Messages children={error.password}/>}
 
                         </View>
 
