@@ -34,18 +34,18 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#1960d8',
+        // backgroundColor: '#1960d8',
         alignItems: 'center',
         justifyContent: 'center',
     },
     content: {
-        marginTop: 50,
+
         alignSelf: 'center',
-        height: '80%',
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#eef5ff',
-        borderRadius: 30,
+
     },
     text: {
         color: '#555',
