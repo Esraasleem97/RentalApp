@@ -7,3 +7,5 @@ export const API = 'api/'
 export const LOGIN = URI + API + 'login'
 
 export const USER = URI + API + 'user';
+
+export const PROFILE = URI + API + USER + '/profile';

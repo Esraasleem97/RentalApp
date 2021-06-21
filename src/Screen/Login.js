@@ -6,7 +6,7 @@ import {GlobalStyle} from "../Style/GlobalStyle";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
-import {userLoginHandler} from "../Redux/actions/userActions";
+import {checkToken, userLoginHandler} from "../Redux/actions/userActions";
 import {USER_REFRESH} from "../Redux/constants/userConstants";
 
 export default function Login({navigation}) {
@@ -21,20 +21,30 @@ export default function Login({navigation}) {
 
     const {loading, error, user} = userLogin
 
+    const {userToken} = useSelector(state => state);
+
+    const {user: getUser} = userToken
+
 
     useEffect(() => {
-
         dispatch({type: USER_REFRESH})
 
-        if (user && user.token) {
-            return navigation.replace('Home')
+        dispatch(checkToken());
+
+
+        if (getUser && getUser.success) {
+            navigation.replace('Home')
         }
 
-    }, [user, dispatch])
+        if (user && user.token){
+            navigation.replace('Home')
+        }
+    }, [dispatch, getUser , user])
 
 
     const SubmitHandler = () => {
         dispatch(userLoginHandler(userName, password))
+
     }
 
 

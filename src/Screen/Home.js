@@ -24,7 +24,9 @@ export default function Home ({navigation}) {
             {id: 3, icon: 'car-sports', name: 'sport'},
             {id: 4, icon: 'car-pickup', name: 'pickup'},
             {id: 5, icon: 'car-side', name: 'side'},
+
         ];
+
         const DATABASE = [
             {
                 id: 1,

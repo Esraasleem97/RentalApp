@@ -22,9 +22,9 @@ import {
  *
  * @param state
  * @param action
- * @returns {{loading: boolean}|{}|{loading: boolean, error}|{loading: boolean, user}}
+ * @returns {{}|{loading: boolean, error}|{loading: boolean, error: {}}|{loading: boolean, user}}
  */
-export const userLoginReducer = (state = {}, action) => {
+export const userLoginReducer = (state = {  }, action) => {
     switch (action.type) {
         case USER_LOGIN_REQUESTS:
             return {loading: true, error: {}}
@@ -65,18 +65,18 @@ export const userRegisterReducer = (state = {}, action) => {
 }
 
 
-export const userUpdateReducer = (state = {success: false, userInfo: {}}, action) => {
+export const userUpdateReducer = (state = {success: false}, action) => {
     switch (action.type) {
         case USER_UPDATE_REQUESTS:
             return {success: false, loading: true}
         case USER_UPDATE_SUCCESS:
             return {
                 loading: false,
-                userInfo: action.payload,
+                user: action.payload,
                 success: true
             }
         case USER_UPDATE_FAILED:
-            return {loading: false, updateErrors: action.payload}
+            return {loading: false, error: action.payload}
 
         default:
             return state

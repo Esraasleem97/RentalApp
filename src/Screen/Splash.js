@@ -1,48 +1,11 @@
-import React, {useEffect} from "react";
+import React from "react";
 import SvgUri from "expo-svg-uri";
 import {StyleSheet, Text, View} from "react-native";
 import {Ionicons} from '@expo/vector-icons';
-import Loader from "../Components/Loader";
-import * as SecureStore from "expo-secure-store";
-import {checkToken} from "../Redux/actions/userActions";
-import {useDispatch, useSelector} from "react-redux";
-import Messages from "../Components/Messages";
 
 
-const Splash = ({navigation}) => {
 
-    const dispatch = useDispatch()
-
-    const {userToken} = useSelector(state => state);
-
-    const {loading, user, error} = userToken
-
-    const checkTokenAsync = async () => {
-        let userToken;
-
-        try {
-            userToken = await SecureStore.getItemAsync('user')
-            return  await dispatch(checkToken(userToken));
-        } catch (e) {
-            console.log(e)
-        }
-
-    }
-    useEffect(() => {
-
-
-        checkTokenAsync().then(() => {
-
-            if (user && user.success) {
-                return navigation.replace('Home')
-            }
-            return navigation.replace('Login')
-        })
-
-
-    }, [dispatch, user]);
-
-
+const Splash = () => {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
@@ -61,8 +24,6 @@ const Splash = ({navigation}) => {
                     can
                     take action right away.</Text>
             </View>
-            {error && <Messages children={error} color='#fff'/>}
-            {loading && <Loader color='#fff'/>}
         </View>
     )
 };

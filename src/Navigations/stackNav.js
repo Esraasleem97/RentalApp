@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, StyleSheet, TouchableOpacity} from "react-native";
 import Home from "../Screen/Home";
 import Splash from "../Screen/Splash";
 import Details from "../Screen/Details";
@@ -24,7 +24,7 @@ const StackNav = () => {
 
     return (
 
-            <Stack.Navigator initialRouteName="Splash"  >
+            <Stack.Navigator initialRouteName="Login"  >
                 <Stack.Screen name="Splash" component={Splash}  screenOptions={{headerShown: false}}/>
                 <Stack.Screen name="Login" component={Login} options={{
                     headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
@@ -38,19 +38,19 @@ const StackNav = () => {
                 <Stack.Screen name="Home" component={Home} options={{
                                   headerRight: props => <Header {...props} />,
                                   headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTitleStyle:{fontSize:22,marginHorizontal:-20},
+                                  headerTitleStyle:{fontSize:22},
                                   headerTintColor : '#fff'
                               }}/>
                 <Stack.Screen name="Details" component={Details} options={{
                                   headerRight: props => <Header {...props} />,
                                   headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTitleStyle:{fontSize:22,marginHorizontal:-20},
+                                  headerTitleStyle:{fontSize:22},
                                   headerTintColor : '#fff'
                               }}/>
                 <Stack.Screen name="Profile" component={Profile} options={{
                                   headerRight: props => <Header {...props} />,
                                   headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTitleStyle:{fontSize:22,marginHorizontal:-20},
+                                  headerTitleStyle:{fontSize:22},
                                   headerTintColor : '#fff'
                               }}/>
             </Stack.Navigator>

@@ -16,7 +16,7 @@ import {
 } from "../constants/userConstants.js";
 
 import axios from "axios";
-import {API_PROTECTION, LOGIN, USER} from "../../Api";
+import {API_PROTECTION, LOGIN, PROFILE, USER} from "../../Api";
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -48,7 +48,7 @@ export const userLoginHandler = (username, password) => async (dispatch) => {
         })
         await SecureStore.deleteItemAsync('user')
 
-        await SecureStore.setItemAsync('user', data.token)
+        await SecureStore.setItemAsync('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
@@ -95,7 +95,7 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
 
         await SecureStore.deleteItemAsync('user')
 
-        await SecureStore.setItemAsync('user', data.token)
+        await SecureStore.setItemAsync('user', JSON.stringify(data))
 
     } catch (e) {
         dispatch({
@@ -115,22 +115,22 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
  * @returns {(function(*, *): Promise<void>)|*}
  * @constructor
  */
-export const UserUpdate = (user) => async (dispatch, getState) => {
+export const UserUpdate = (user) => async (dispatch) => {
 
     try {
         dispatch({type: USER_UPDATE_REQUESTS})
 
-        const {userLogin: {user: LoggedInUser}} = getState()
+        let getUser =  await SecureStore.getItemAsync('user');
 
         const config = {
             headers: {
                 'Content-Type': 'application/json',
                 'X-API-KEY': API_PROTECTION,
-                Authorization: `${LoggedInUser.token}`
+                Authorization: JSON.parse(getUser).token || null
             }
         }
 
-        const {data} = await axios.put(`/api/users/profile`, user, config);
+        const {data} = await axios.put(`${PROFILE}`, user, config);
 
 
         dispatch({
@@ -154,15 +154,18 @@ export const UserUpdate = (user) => async (dispatch, getState) => {
 }
 
 
-export const checkToken = (token) => async (dispatch) => {
+export const checkToken = () => async (dispatch) => {
+
     try {
         dispatch({type: USER_TOKEN_REQUESTS})
+
+         let getUser =  await SecureStore.getItemAsync('user');
 
         const config = {
             headers: {
                 'Content-Type': 'application/json',
                 'X-API-KEY': API_PROTECTION,
-                Authorization: token  || null
+                Authorization: JSON.parse(getUser).token || null
             }
         }
 
@@ -173,7 +176,9 @@ export const checkToken = (token) => async (dispatch) => {
             payload: data
         })
 
+
     } catch (e) {
+
         dispatch({
             type: USER_TOKEN_FAILED,
             payload: e.response && e.response.data.errors
