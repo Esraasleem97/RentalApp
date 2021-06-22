@@ -28,7 +28,20 @@ function Header() {
         </TouchableOpacity>
     )
 }
+function GoBackHandler() {
 
+    const navigation = useNavigation()
+
+    return (
+        <TouchableOpacity style={{marginHorizontal:25}} onPress= {() => navigation.goBack()}>
+            <Icon
+                name="arrow-left"
+                size={25}
+                color="#FFF"
+            />
+        </TouchableOpacity>
+    )
+}
 function DrawerContent(props) {
 
 
@@ -158,7 +171,7 @@ function DrawerContent(props) {
 
 export default function DrawerNav({check}) {
 
-    const navigation = useNavigation()
+
     const Drawer = createDrawerNavigator();
     return (
 
@@ -168,13 +181,21 @@ export default function DrawerNav({check}) {
                               headerTitleStyle: {fontSize: 22},
                               headerStyle: {backgroundColor: '#1960d8', borderBottomWidth: 0, elevation: 0},
                               headerTintColor: '#fff',
-                              headerLeft:props => <HeaderBackButton onPress={()=> navigation.goBack()} {...props}/>,
                               headerRight: props => <Header {...props} />,
                               drawerIcon: false
                           }}>
-            <Drawer.Screen name="Home" component={Home}/>
-            <Drawer.Screen name="Profile" component={Profile}/>
-            <Drawer.Screen name="Details" component={Details}/>
+            <Drawer.Screen name="Home" component={Home} options={{
+                headerLeft:() => <></>,
+                headerTitleStyle:{marginHorizontal:-35,fontSize: 22}
+            }}/>
+            <Drawer.Screen name="Profile" component={Profile} options={{
+                headerLeft:props => <GoBackHandler {...props}/>,
+            }}/>
+            <Drawer.Screen name="Details" component={Details}
+                           options={{
+                               headerLeft:props => <GoBackHandler {...props}/>
+                           }}
+            />
         </Drawer.Navigator>
 
 
