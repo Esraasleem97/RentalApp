@@ -1,24 +1,26 @@
 import React from "react";
 import SvgUri from "expo-svg-uri";
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {Ionicons} from '@expo/vector-icons';
+import LottieView from "lottie-react-native";
 
 
 const Splash = () => {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
-                <SvgUri width="250" height="250"
-                        source={require('../../assets/car-rent.svg')}
-                />
-                <View style={{flexDirection: 'row', marginBottom: 25, width: 200, justifyContent: 'space-between'}}>
-                    <Ionicons name="code-working" size={15} color="#01155a"/>
-                    <Ionicons name="cog" size={15} color="#01155a"/>
-                    <Ionicons name="construct" size={15} color="#01155a"/>
-                    <Ionicons name="speedometer" size={15} color="#01155a"/>
-                    <Ionicons name="car" size={15} color="#01155a"/>
-                </View>
-                {/*<Text style={{fontSize: 18 ,color: '#f6eded'}}>GET CAR DETAILS</Text>*/}
+                {/*<SvgUri width="250" height="250"*/}
+                {/*        source={require('../../assets/car-rent.svg')}*/}
+                {/*/>*/}
+                <LottieView source={require('../../assets/car.json')} autoPlay loop/>
+                {/*<View style={{flexDirection: 'row', marginBottom: 25, width: 200, justifyContent: 'space-between'}}>*/}
+                {/*    <Ionicons name="code-working" size={15} color="#01155a"/>*/}
+                {/*    <Ionicons name="cog" size={15} color="#01155a"/>*/}
+                {/*    <Ionicons name="construct" size={15} color="#01155a"/>*/}
+                {/*    <Ionicons name="speedometer" size={15} color="#01155a"/>*/}
+                {/*    <Ionicons name="car" size={15} color="#01155a"/>*/}
+                {/*</View>*/}
+                {/*<Text style={{fontSize: 50 ,color: '#fff',marginBottom:180}}>CAR RENTAL</Text>*/}
 
             </View>
         </View>
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         height: '100%',
-        backgroundColor: '#010c3b',
+        backgroundColor: '#131F47',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#89adf1',
+
 
     },
     text: {
