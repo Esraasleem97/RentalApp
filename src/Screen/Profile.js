@@ -7,6 +7,7 @@ import FloatingLabelInput from "../Components/FloatingLabelInput";
 import {useDispatch, useSelector} from "react-redux";
 import {checkToken, UserUpdateHandler} from "../Redux/actions/userActions";
 import Loader from "../Components/Loader";
+import Messages from "../Components/Messages";
 
 
 export default function Profile() {
@@ -31,8 +32,7 @@ export default function Profile() {
     const {userUpdate} = useSelector(state => state);
 
     const {loading, user: userUpdated, error} = userUpdate
-
-
+console.lo(error)
     useEffect(() => {
         dispatch(checkToken());
         setUsername(user.username)
@@ -42,7 +42,7 @@ export default function Profile() {
         setCity(user.city)
         setAddress(user.address)
 
-        if (userUpdated ) {
+        if (userUpdated) {
             alert('userUpdated ' + userUpdated)
         }
     }, [dispatch, userUpdated])
@@ -76,39 +76,48 @@ export default function Profile() {
                                 value={username}
                                 onChangeText={(value) => setUsername(value)}
                             />
+                            {error && error.username && <Messages children={error.username}/>}
+
+
                             <FloatingLabelInput
                                 label="Email"
                                 value={email}
                                 onChangeText={(value) => setEmail(value)}
                             />
+                            {error && error.email && <Messages children={error.email}/>}
+
+
                             <FloatingLabelInput
                                 label="Phone Number"
                                 value={phoneNumber}
                                 onChangeText={(value) => setPhoneNumber(value)}
                             />
+                            {error && error.phone_number && <Messages children={error.phone_number}/>}
 
                             <FloatingLabelInput
                                 label="Country"
                                 value={country}
                                 onChangeText={(value) => setCountry(value)}
                             />
+                            {error && error.country && <Messages children={error.country}/>}
                             <FloatingLabelInput
                                 label="City"
                                 value={city}
                                 onChangeText={(value) => setCity(value)}
                             />
+                            {error && error.city && <Messages children={error.city}/>}
                             <FloatingLabelInput
                                 label="Address"
                                 value={address}
                                 onChangeText={(value) => setAddress(value)}
                             />
-
+                            {error && error.address && <Messages children={error.address}/>}
                             <FloatingLabelInput
                                 label="Password"
                                 secureTextEntry={true}
                                 onChangeText={value => setPassword(value)}
                             />
-
+                            {error && error.password && <Messages children={error.password}/>}
 
                         </View>
                         {loading
