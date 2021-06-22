@@ -10,6 +10,7 @@ export const FormStyle = StyleSheet.create({
         width: '80%',
         marginVertical: 12,
         alignItems: 'center',
+        marginTop:10
 
     },
     input: {

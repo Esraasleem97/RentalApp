@@ -19,11 +19,13 @@ const StackNav = ({check}) => {
 
                 {props => <Login {...props} checkAuthorization={check}/>}
             </Stack.Screen>
-            <Stack.Screen name="Register" component={Register} options={{
+            <Stack.Screen name="Register" options={{
                 headerStyle: {backgroundColor: '#1960d8', borderBottomWidth: 0, elevation: 0},
                 headerTitleStyle: {fontSize: 25},
                 headerTintColor: '#fff'
-            }}/>
+            }}>
+                {props => <Register {...props} checkAuthorization={check}/>}
+            </Stack.Screen>
         </Stack.Navigator>
     )
 }
