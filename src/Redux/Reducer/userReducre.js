@@ -13,7 +13,7 @@ import {
     USER_REFRESH,
     USER_TOKEN_REQUESTS,
     USER_TOKEN_SUCCESS,
-    USER_TOKEN_FAILED
+    USER_TOKEN_FAILED,
 
 } from "../constants/userConstants.js";
 
@@ -24,7 +24,7 @@ import {
  * @param action
  * @returns {{}|{loading: boolean, error}|{loading: boolean, error: {}}|{loading: boolean, user}}
  */
-export const userLoginReducer = (state = {  }, action) => {
+export const userLoginReducer = (state = {}, action) => {
     switch (action.type) {
         case USER_LOGIN_REQUESTS:
             return {loading: true, error: {}}
@@ -41,6 +41,7 @@ export const userLoginReducer = (state = {  }, action) => {
 
         case USER_REFRESH:
             return {}
+
         default:
             return state
     }

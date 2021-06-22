@@ -11,7 +11,7 @@ import {
     USER_UPDATE_FAILED,
     USER_TOKEN_REQUESTS,
     USER_TOKEN_SUCCESS,
-    USER_TOKEN_FAILED
+    USER_TOKEN_FAILED ,
 
 } from "../constants/userConstants.js";
 
@@ -115,12 +115,12 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
  * @returns {(function(*, *): Promise<void>)|*}
  * @constructor
  */
-export const UserUpdate = (user) => async (dispatch) => {
+export const UserUpdateHandler = (user) => async (dispatch) => {
 
     try {
         dispatch({type: USER_UPDATE_REQUESTS})
 
-        let getUser =  await SecureStore.getItemAsync('user');
+        let getUser = await SecureStore.getItemAsync('user');
 
         const config = {
             headers: {
@@ -159,7 +159,7 @@ export const checkToken = () => async (dispatch) => {
     try {
         dispatch({type: USER_TOKEN_REQUESTS})
 
-         let getUser =  await SecureStore.getItemAsync('user');
+        let getUser = await SecureStore.getItemAsync('user');
 
         const config = {
             headers: {
@@ -189,6 +189,8 @@ export const checkToken = () => async (dispatch) => {
 
 
 }
+
+
 
 /**
  *

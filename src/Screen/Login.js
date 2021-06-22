@@ -6,11 +6,11 @@ import {GlobalStyle} from "../Style/GlobalStyle";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
-import {checkToken, userLoginHandler} from "../Redux/actions/userActions";
+import {userLoginHandler} from "../Redux/actions/userActions";
 import {USER_REFRESH} from "../Redux/constants/userConstants";
 import {FormStyle} from '../Style/FormStyle';
 
-export default function Login({navigation}) {
+export default function Login({navigation, checkAuthorization}) {
 
     const [userName, setUserName] = useState('');
 
@@ -22,32 +22,20 @@ export default function Login({navigation}) {
 
     const {loading, error, user} = userLogin
 
-    const {userToken} = useSelector(state => state);
-
-    const {user: getUser} = userToken
-
 
     useEffect(() => {
         dispatch({type: USER_REFRESH})
 
-        dispatch(checkToken());
-
-
-        if (getUser && getUser.success) {
-            navigation.navigate('Home')
+        if (user && user.token) {
+            checkAuthorization(true)
         }
-
-        if (user && user.token){
-            navigation.navigate('Home')
-        }
-    }, [dispatch, getUser , user])
+    }, [dispatch, user])
 
 
     const SubmitHandler = () => {
         dispatch(userLoginHandler(userName, password))
 
     }
-
 
     return (
 
@@ -90,6 +78,7 @@ export default function Login({navigation}) {
                             <View style={FormStyle.input}>
 
                                 <TextInput placeholder='Password'
+                                           secureTextEntry={true}
                                            onChangeText={(value) => setPassword(value)}
                                 />
 

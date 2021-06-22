@@ -1,5 +1,5 @@
-import {NavigationContainer, useNavigation} from "@react-navigation/native";
-import {createDrawerNavigator,DrawerContentScrollView,DrawerItem} from "@react-navigation/drawer";
+import {useNavigation} from "@react-navigation/native";
+import {createDrawerNavigator, DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
 import React from "react";
 import Home from "../Screen/Home";
 import Profile from "../Screen/Profile";
@@ -13,10 +13,13 @@ import {
 } from 'react-native-paper';
 
 import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
-
 import Details from "../Screen/Details";
+import {useDispatch} from "react-redux";
+import {Logout} from "../Redux/actions/userActions";
+import {HeaderBackButton} from "@react-navigation/stack";
 
-function Header ()  {
+function Header() {
+
     const navigation = useNavigation()
 
     return (
@@ -25,35 +28,40 @@ function Header ()  {
         </TouchableOpacity>
     )
 }
-function DrawerContent(props){
 
-    return(
-        <View style={{flex:1}}>
+function DrawerContent(props) {
+
+
+    const dispatch = useDispatch()
+
+
+    const LogoutHandler = () => {
+
+        dispatch(Logout())
+
+        props.check(false)
+
+    }
+
+
+    return (
+        <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{flexDirection:'row',marginTop: 15}}>
+                        <View style={{flexDirection: 'row', marginTop: 15}}>
                             <Avatar.Image
                                 source={{
                                     uri: 'https://api.adorable.io/avatars/50/abott@adorable.png'
                                 }}
                                 size={50}
                             />
-                            <View style={{marginLeft:15, flexDirection:'column'}}>
+                            <View style={{marginLeft: 15, flexDirection: 'column'}}>
                                 <Title style={styles.title}>John Doe</Title>
                                 <Caption style={styles.caption}>es@j_doe.com</Caption>
                             </View>
                         </View>
 
-                        {/*<View style={styles.row}>*/}
-                        {/*    <View style={styles.section}>*/}
-                        {/*        <Paragraph style={[styles.paragraph, styles.caption]}>*/}
-                        {/*            <Icon name='phone' size={15}/>*/}
-                        {/*        </Paragraph>*/}
-                        {/*        <Caption style={styles.caption}>(+962) 78 1111 888</Caption>*/}
-                        {/*    </View>*/}
-
-                        {/*</View>*/}
                     </View>
 
                     <Drawer.Section style={styles.drawerSection}>
@@ -66,7 +74,9 @@ function DrawerContent(props){
                                 />
                             )}
                             label="Home"
-                            onPress={() => {props.navigation.navigate('Home')}}
+                            onPress={() => {
+                                props.navigation.navigate('Home')
+                            }}
                         />
                         <DrawerItem
                             icon={({color, size}) => (
@@ -77,7 +87,9 @@ function DrawerContent(props){
                                 />
                             )}
                             label="Profile"
-                            onPress={() => {props.navigation.navigate('Profile')}}
+                            onPress={() => {
+                                props.navigation.navigate('Profile')
+                            }}
                         />
                         <DrawerItem
                             icon={({color, size}) => (
@@ -88,7 +100,9 @@ function DrawerContent(props){
                                 />
                             )}
                             label="Booking"
-                            onPress={() => {props.navigation.navigate('BookmarkScreen')}}
+                            onPress={() => {
+                                props.navigation.navigate('BookmarkScreen')
+                            }}
                         />
 
 
@@ -103,7 +117,9 @@ function DrawerContent(props){
                                 />
                             )}
                             label="About us"
-                            onPress={() => {props.navigation.navigate('BookmarkScreen')}}
+                            onPress={() => {
+                                props.navigation.navigate('BookmarkScreen')
+                            }}
                         />
                         <DrawerItem
                             icon={({color, size}) => (
@@ -114,7 +130,9 @@ function DrawerContent(props){
                                 />
                             )}
                             label="Contact us"
-                            onPress={() => {props.navigation.navigate('BookmarkScreen')}}
+                            onPress={() => {
+                                props.navigation.navigate('BookmarkScreen')
+                            }}
                         />
 
 
@@ -132,29 +150,33 @@ function DrawerContent(props){
                         />
                     )}
                     label="Sign Out"
-
-                />
+                    onPress={LogoutHandler}/>
             </Drawer.Section>
         </View>
     );
 }
-export default function DrawerNav() {
+
+export default function DrawerNav({check}) {
+
+    const navigation = useNavigation()
     const Drawer = createDrawerNavigator();
     return (
 
-            <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}
-                              screenOptions={{
-                                  headerShown :true,
-                                  headerTitleStyle:{fontSize:22},
-                                  headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
-                                  headerTintColor : '#fff',
-                                  headerRight: props => <Header {...props} />,
-                                  drawerIcon:false
-                              }}>
-                <Drawer.Screen name="Home" component={Home}/>
-                <Drawer.Screen name="Profile" component={Profile} />
-                <Drawer.Screen name="Details" component={Details} />
-            </Drawer.Navigator>
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} check={check}/>}
+                          screenOptions={{
+                              headerShown: true,
+                              headerTitleStyle: {fontSize: 22},
+                              headerStyle: {backgroundColor: '#1960d8', borderBottomWidth: 0, elevation: 0},
+                              headerTintColor: '#fff',
+                              headerLeft:props => <HeaderBackButton onPress={()=> navigation.goBack()} {...props}/>,
+                              headerRight: props => <Header {...props} />,
+                              drawerIcon: false
+                          }}>
+            <Drawer.Screen name="Home" component={Home}/>
+            <Drawer.Screen name="Profile" component={Profile}/>
+            <Drawer.Screen name="Details" component={Details}/>
+        </Drawer.Navigator>
+
 
     );
 }
@@ -183,7 +205,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginRight: 15,
-        marginTop:10
+        marginTop: 10
     },
     paragraph: {
         fontWeight: 'bold',
@@ -207,6 +229,6 @@ const styles = StyleSheet.create({
         width: 45,
         height: 45,
         borderRadius: 100,
-        marginHorizontal:30
+        marginHorizontal: 30
     },
 })

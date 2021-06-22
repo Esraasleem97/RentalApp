@@ -15,10 +15,13 @@ import {GlobalStyle} from '../Style/GlobalStyle'
 
 
 export default function Home({navigation}) {
+
     const [starCount, setStarCount] = useState(2.5);
+
     const onStarRatingPress = (rating) => {
         setStarCount(rating);
     }
+
     const DATATYPE = [
         {id: 1, icon: 'car-cog', name: 'cog'},
         {id: 2, icon: 'car-estate', name: 'estate'},
