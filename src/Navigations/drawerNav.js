@@ -143,17 +143,14 @@ export default function DrawerNav() {
     return (
 
             <Drawer.Navigator drawerContent={props => <DrawerContent {...props}/>}
-
                               screenOptions={{
                                   headerShown :true,
                                   headerTitleStyle:{fontSize:22},
                                   headerStyle: {backgroundColor: '#1960d8',borderBottomWidth:0,elevation:0},
                                   headerTintColor : '#fff',
-                                  backBehavior:true,
                                   headerRight: props => <Header {...props} />,
                                   drawerIcon:false
-                              }}
-            >
+                              }}>
                 <Drawer.Screen name="Home" component={Home}/>
                 <Drawer.Screen name="Profile" component={Profile} />
                 <Drawer.Screen name="Details" component={Details} />
