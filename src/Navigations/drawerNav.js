@@ -64,9 +64,7 @@ function DrawerContent(props) {
                     <View style={styles.userInfoSection}>
                         <View style={{flexDirection: 'row', marginTop: 15}}>
                             <Avatar.Image
-                                source={{
-                                    uri: 'https://api.adorable.io/avatars/50/abott@adorable.png'
-                                }}
+                                source={require('../../assets/avatar-2.png')}
                                 size={50}
                             />
                             <View style={{marginLeft: 15, flexDirection: 'column'}}>
@@ -170,32 +168,29 @@ function DrawerContent(props) {
 }
 
 export default function DrawerNav({check}) {
+    const screenOptions = {
+        headerShown: true,
+        headerTitleStyle: {fontSize: 22},
+        headerStyle: {backgroundColor: '#1960d8', borderBottomWidth: 0, elevation: 0},
+        headerTintColor: '#fff',
+        headerRight: props => <Header {...props} />,
 
+    }
+    const option = {
+        headerLeft:props => <GoBackHandler {...props}/>,
+    }
 
     const Drawer = createDrawerNavigator();
     return (
 
         <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} check={check}/>}
-                          screenOptions={{
-                              headerShown: true,
-                              headerTitleStyle: {fontSize: 22},
-                              headerStyle: {backgroundColor: '#1960d8', borderBottomWidth: 0, elevation: 0},
-                              headerTintColor: '#fff',
-                              headerRight: props => <Header {...props} />,
-                              drawerIcon: false
-                          }}>
+                          screenOptions={screenOptions}>
             <Drawer.Screen name="Home" component={Home} options={{
                 headerLeft:() => <></>,
                 headerTitleStyle:{marginHorizontal:-35,fontSize: 22}
             }}/>
-            <Drawer.Screen name="Profile" component={Profile} options={{
-                headerLeft:props => <GoBackHandler {...props}/>,
-            }}/>
-            <Drawer.Screen name="Details" component={Details}
-                           options={{
-                               headerLeft:props => <GoBackHandler {...props}/>
-                           }}
-            />
+            <Drawer.Screen name="Profile" component={Profile} options={option}/>
+            <Drawer.Screen name="Details" component={Details} options={option}/>
         </Drawer.Navigator>
 
 
