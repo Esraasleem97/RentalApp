@@ -6,9 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/car_s.png",
+      "image": "./assets/carSplash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#131F47"
+      "backgroundColor": "#eef5ff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
