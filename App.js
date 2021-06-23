@@ -5,6 +5,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 import {store} from "./src/Redux/store";
 import {checkToken} from "./src/Redux/actions/userActions";
 import DrawerNav from "./src/Navigations/drawerNav";
+import Splash from "./src/Screen/Splash";
 
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
 
     const [isAuthorized, setIsAuthorized] = useState(false);
 
+    const [splash, setSplash] = useState(true);
+
+
     const checkAuthorization = (value) => {
         setIsAuthorized(value)
     }
@@ -26,21 +30,27 @@ function App() {
         dispatch(checkToken());
 
         if (user) {
-            return setIsAuthorized(true)
-        }else{
-            return setIsAuthorized(false)
+            setIsAuthorized(true)
+        } else {
+            setIsAuthorized(false)
         }
+
+
+        setTimeout(() => {
+            setSplash(false);
+        }, 2000)
 
 
     }, [dispatch])
 
-
-
+     if (splash) {
+         return <Splash/>
+     }
     return (
 
         <NavigationContainer>
             {user && user.success
-                ? <DrawerNav check={checkAuthorization} />
+                ? <DrawerNav check={checkAuthorization}/>
                 : isAuthorized
                     ? <DrawerNav check={checkAuthorization}/>
                     : <StackNav check={checkAuthorization}/>

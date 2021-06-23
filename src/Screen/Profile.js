@@ -14,18 +14,20 @@ export default function Profile() {
 
 
     const [username, setUsername] = useState();
+
     const [email, setEmail] = useState('');
+
     const [phoneNumber, setPhoneNumber] = useState('');
+
     const [country, setCountry] = useState('');
+
     const [city, setCity] = useState('');
+
     const [address, setAddress] = useState('');
 
     const [password, setPassword] = useState('');
 
-
     const dispatch = useDispatch()
-
-
 
     const {userToken} = useSelector(state => state);
 

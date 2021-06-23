@@ -34,7 +34,6 @@ export default function Login({navigation, checkAuthorization}) {
 
     const SubmitHandler = () => {
         dispatch(userLoginHandler(userName, password))
-
     }
 
     return (
