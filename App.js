@@ -5,7 +5,7 @@ import {Provider, useDispatch, useSelector} from "react-redux";
 import {store} from "./src/Redux/store";
 import {checkToken} from "./src/Redux/actions/userActions";
 import DrawerNav from "./src/Navigations/drawerNav";
-import Loader from "./src/Components/Loader";
+import Splash from "./src/Screen/Splash";
 
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
 
 
     if (loading) {
-        return <Loader/>
+        return <Splash/>
     }
 
     return (
