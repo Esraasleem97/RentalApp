@@ -4,6 +4,7 @@ import {SliderBox} from "react-native-image-slider-box";
 import StarRating from "react-native-star-rating";
 import {FontAwesome5, SimpleLineIcons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from '../Style/GlobalStyle';
+import Bars from "../Components/Bars";
 export default class Details extends Component {
 
 

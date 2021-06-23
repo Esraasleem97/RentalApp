@@ -8,9 +8,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {checkToken, UserUpdateHandler} from "../Redux/actions/userActions";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
+import Bars from "../Components/Bars";
 
 
-export default function Profile() {
+export default function Profile({navigation}) {
 
 
     const [username, setUsername] = useState();
@@ -139,6 +140,7 @@ export default function Profile() {
                         }
                     </View>
                 </ScrollView>
+
             </View>
         </SafeAreaView>
     )

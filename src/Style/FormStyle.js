@@ -4,6 +4,7 @@ export const FormStyle = StyleSheet.create({
     content: {
         width: '100%',
         alignItems: 'center',
+        marginBottom: 40
     },
     form_control: {
         width: '80%',

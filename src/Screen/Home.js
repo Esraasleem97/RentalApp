@@ -12,6 +12,7 @@ import {
 import {FontAwesome5, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
+import Bars from "../Components/Bars";
 
 
 export default function Home({navigation}) {
@@ -134,8 +135,6 @@ export default function Home({navigation}) {
                                 Cars</Text></TouchableOpacity>
                             <TouchableOpacity><Text style={styles.tab}>Latest Cars</Text></TouchableOpacity>
                             <TouchableOpacity><Text style={styles.tab}>Recently Arrived</Text></TouchableOpacity>
-
-
                         </View>
                         <SafeAreaView style={styles.section_pro}>
                             {DATABASE.map((item) => {
@@ -201,11 +200,9 @@ export default function Home({navigation}) {
                         </SafeAreaView>
 
                     </ScrollView>
-                    <TouchableOpacity style={styles.bars} onPress={() => navigation.openDrawer()}>
-                        <FontAwesome5 name='bars' size={25} color='#fff'/>
-                    </TouchableOpacity>
-                </View>
 
+                </View>
+                <Bars navigation={navigation}/>
             </SafeAreaView>
 
         </View>
@@ -323,15 +320,5 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#1960d8'
     },
-    bars: {
-        position: 'absolute',
-        right: 10,
-        bottom: 80,
-        width:60,
-        height:60,
-        backgroundColor:'#1960d8',
-        justifyContent:'center',
-        alignItems:'center',
-        borderRadius:100
-    }
+
 })
