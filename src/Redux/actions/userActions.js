@@ -16,7 +16,7 @@ import {
 } from "../constants/userConstants.js";
 
 import axios from "axios";
-import {API_PROTECTION, LOGIN, PROFILE, USER} from "../../Api";
+import {API_PROTECTION, LOGIN, PROFILE, REGISTER, USER} from "../../Api";
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -80,7 +80,7 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.post(`api/users`, userData, config);
+        const {data} = await axios.post(`${REGISTER}`, userData, config);
 
 
         dispatch({

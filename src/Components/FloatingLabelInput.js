@@ -71,10 +71,15 @@ export default class FloatingLabelInput extends Component {
             }),
         };
         return (
+
             <View style={{ paddingTop: 18,width:'100%' }}>
+
+
                 <Animated.Text style={[style.labelStyle,animatedLabelStyle]}>
+
                     {label}
                 </Animated.Text>
+
                 <TextInput
                     {...props}
                     style={[style.textInput,isFocused&&style.focusedTextInput]}
@@ -84,6 +89,7 @@ export default class FloatingLabelInput extends Component {
                     selectionColor={style.selectionColor}
                     underlineColorAndroid="transparent"
                 />
+
             </View>
         );
     }

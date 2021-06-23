@@ -40,19 +40,23 @@ function App() {
             setSplash(false);
         }, 2000)
 
-
+         return () => {
+             dispatch(checkToken());
+         }
     }, [dispatch])
+
 
      if (splash) {
          return <Splash/>
      }
+
     return (
 
         <NavigationContainer>
             {user && user.success
-                ? <DrawerNav check={checkAuthorization}/>
+                ? <DrawerNav check={checkAuthorization}  />
                 : isAuthorized
-                    ? <DrawerNav check={checkAuthorization}/>
+                    ? <DrawerNav check={checkAuthorization}  />
                     : <StackNav check={checkAuthorization}/>
             }
         </NavigationContainer>

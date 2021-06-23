@@ -8,11 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {checkToken, UserUpdateHandler} from "../Redux/actions/userActions";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
-import Bars from "../Components/Bars";
 
 
-export default function Profile({navigation}) {
+export default function Profile() {
 
+    const dispatch = useDispatch()
 
     const [username, setUsername] = useState();
 
@@ -28,24 +28,28 @@ export default function Profile({navigation}) {
 
     const [password, setPassword] = useState('');
 
-    const dispatch = useDispatch()
+    const [id, setId] = useState('');
 
     const {userToken} = useSelector(state => state);
 
-    const {user , error , loading} = userToken
+    const {user} = userToken
 
+    const {userUpdate} = useSelector(state => state);
+
+    const {error, loading} = userUpdate
 
     useEffect(() => {
-
-        setUsername(user.username)
-        setEmail(user.email)
-        setPhoneNumber(user.phone_number)
-        setCountry(user.country)
-        setCity(user.city)
-        setAddress(user.address)
-
-
-    }, [user])
+        dispatch(checkToken())
+        if (user) {
+            setUsername(user.username)
+            setEmail(user.email)
+            setPhoneNumber(user.phone_number)
+            setCountry(user.country)
+            setCity(user.city)
+            setAddress(user.address)
+            setId(user.id)
+        }
+    }, [ user])
 
 
     const SubmitHandler = () => {
@@ -58,77 +62,74 @@ export default function Profile({navigation}) {
             city,
             address,
             password,
+            id
         }));
 
-        const {userUpdate} = useSelector(state => state);
-
-        const {loading, user: userUpdated, error} = userUpdate
-
-        setUsername(userUpdated.username)
-        setEmail(userUpdated.email)
-        setPhoneNumber(userUpdated.phone_number)
-        setCountry(userUpdated.country)
-        setCity(userUpdated.city)
-        setAddress(userUpdated.address)
     }
 
     return (
         <SafeAreaView style={GlobalStyle.body}>
             <View style={GlobalStyle.container}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={FormStyle.content}>
                         <Image style={{width: 100, height: 100, marginVertical: 20}}
                                source={require('../../assets/avatar-2.png')}
                         />
                         <Text style={FormStyle.text}>My Profile</Text>
                         <View style={FormStyle.form_control}>
+                            {error && error.username && <Messages style={{marginLeft: 15}} children={error.username}/>}
                             <FloatingLabelInput
                                 label="Username"
                                 value={username}
                                 onChangeText={(value) => setUsername(value)}
                             />
-                            {error && error.username && <Messages children={error.username}/>}
 
 
+                            {error && error.email && <Messages style={{marginLeft: 15}} children={error.email}/>}
                             <FloatingLabelInput
                                 label="Email"
                                 value={email}
                                 onChangeText={(value) => setEmail(value)}
                             />
-                            {error && error.email && <Messages children={error.email}/>}
 
 
+                            {error && error.phone_number &&
+                            <Messages style={{marginLeft: 20}} children={error.phone_number}/>}
                             <FloatingLabelInput
                                 label="Phone Number"
                                 value={phoneNumber}
                                 onChangeText={(value) => setPhoneNumber(value)}
                             />
-                            {error && error.phone_number && <Messages children={error.phone_number}/>}
+
+                            {error && error.country && <Messages style={{marginLeft: 20}} children={error.country}/>}
 
                             <FloatingLabelInput
                                 label="Country"
                                 value={country}
                                 onChangeText={(value) => setCountry(value)}
                             />
-                            {error && error.country && <Messages children={error.country}/>}
+                            {error && error.city && <Messages style={{marginLeft: 20}} children={error.city}/>}
+
                             <FloatingLabelInput
                                 label="City"
                                 value={city}
                                 onChangeText={(value) => setCity(value)}
                             />
-                            {error && error.city && <Messages children={error.city}/>}
+                            {error && error.address && <Messages style={{marginLeft: 20}} children={error.address}/>}
+
                             <FloatingLabelInput
                                 label="Address"
                                 value={address}
                                 onChangeText={(value) => setAddress(value)}
                             />
-                            {error && error.address && <Messages children={error.address}/>}
+
+                            {error && error.password && <Messages style={{marginLeft: 15}} children={error.password}/>}
                             <FloatingLabelInput
                                 label="Password"
                                 secureTextEntry={true}
                                 onChangeText={value => setPassword(value)}
                             />
-                            {error && error.password && <Messages children={error.password}/>}
+
 
                         </View>
                         {loading

@@ -11,7 +11,7 @@ import {USER_REFRESH} from "../Redux/constants/userConstants";
 import {FormStyle} from "../Style/FormStyle";
 
 
-export default function Register({navigation}) {
+export default function Register({checkAuthorization}) {
 
 
     const [username, setUsername] = useState('');
@@ -19,8 +19,11 @@ export default function Register({navigation}) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState(null);
     const [confirmPass, setConfirmPass] = useState(null);
+
     const {userRegister} = useSelector((state) => state);
+
     const {loading, error, user} = userRegister;
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -28,7 +31,7 @@ export default function Register({navigation}) {
         dispatch({type: USER_REFRESH})
 
         if (user && user.token) {
-            return navigation.navigate('Home')
+            checkAuthorization(true)
         }
 
     }, [user, dispatch])

@@ -15,8 +15,7 @@ import {
 import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 import Details from "../Screen/Details";
 import {useDispatch} from "react-redux";
-import {Logout} from "../Redux/actions/userActions";
-import {HeaderBackButton} from "@react-navigation/stack";
+import {checkToken, Logout} from "../Redux/actions/userActions";
 
 function Header() {
 
@@ -28,12 +27,13 @@ function Header() {
         </TouchableOpacity>
     )
 }
+
 function GoBackHandler() {
 
     const navigation = useNavigation()
 
     return (
-        <TouchableOpacity style={{marginHorizontal:25}} onPress= {() => navigation.goBack()}>
+        <TouchableOpacity style={{marginHorizontal: 25}} onPress={() => navigation.goBack()}>
             <Icon
                 name="arrow-left"
                 size={25}
@@ -42,6 +42,7 @@ function GoBackHandler() {
         </TouchableOpacity>
     )
 }
+
 function DrawerContent(props) {
 
 
@@ -51,6 +52,8 @@ function DrawerContent(props) {
     const LogoutHandler = () => {
 
         dispatch(Logout())
+
+        dispatch(checkToken())
 
         props.check(false)
 
@@ -177,7 +180,7 @@ export default function DrawerNav({check}) {
 
     }
     const option = {
-        headerLeft:props => <GoBackHandler {...props}/>,
+        headerLeft: props => <GoBackHandler {...props}/>,
     }
 
     const Drawer = createDrawerNavigator();
@@ -186,10 +189,11 @@ export default function DrawerNav({check}) {
         <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} check={check}/>}
                           screenOptions={screenOptions}>
             <Drawer.Screen name="Home" component={Home} options={{
-                headerLeft:() => <></>,
-                headerTitleStyle:{marginHorizontal:-35,fontSize: 22}
+                headerLeft: () => <></>,
+                headerTitleStyle: {marginHorizontal: -35, fontSize: 22}
             }}/>
             <Drawer.Screen name="Profile" component={Profile} options={option}/>
+
             <Drawer.Screen name="Details" component={Details} options={option}/>
         </Drawer.Navigator>
 
