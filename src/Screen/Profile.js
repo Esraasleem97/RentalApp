@@ -39,7 +39,7 @@ export default function Profile() {
     const {error, loading} = userUpdate
 
     useEffect(() => {
-        dispatch(checkToken())
+
         if (user) {
             setUsername(user.username)
             setEmail(user.email)
@@ -48,6 +48,8 @@ export default function Profile() {
             setCity(user.city)
             setAddress(user.address)
             setId(user.id)
+        }else {
+            dispatch(checkToken())
         }
     }, [ user])
 
