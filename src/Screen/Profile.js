@@ -35,7 +35,6 @@ export default function Profile() {
 
 
     useEffect(() => {
-        dispatch(checkToken())
 
         setUsername(user.username)
         setEmail(user.email)
@@ -45,7 +44,7 @@ export default function Profile() {
         setAddress(user.address)
 
 
-    }, [dispatch])
+    }, [user])
 
 
     const SubmitHandler = () => {
