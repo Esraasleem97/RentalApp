@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import StackNav from "./src/Navigations/stackNav";
 import {Provider, useDispatch, useSelector} from "react-redux";
 import {store} from "./src/Redux/store";
-import {USER_REFRESH} from "./src/Redux/constants/userConstants";
 import {checkToken} from "./src/Redux/actions/userActions";
+import DrawerNav from "./src/Navigations/drawerNav";
 
 
-export default function App() {
+function App() {
+
 
     const {userToken} = useSelector(state => state);
 
@@ -15,20 +16,44 @@ export default function App() {
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch({type: USER_REFRESH})
+    const [isAuthorized, setIsAuthorized] = useState(false);
 
+    const checkAuthorization = (value) => {
+        setIsAuthorized(value)
+    }
+
+    useEffect(() => {
         dispatch(checkToken());
 
-    }, [user])
+        if (user) {
+            return setIsAuthorized(true)
+        }else{
+            return setIsAuthorized(false)
+        }
+
+
+    }, [dispatch])
+
+
 
     return (
-        <Provider store={store}>
-            <NavigationContainer>
-                <StackNav/>
-            </NavigationContainer>
-        </Provider>
 
+        <NavigationContainer>
+            {user && user.success
+                ? <DrawerNav check={checkAuthorization} />
+                : isAuthorized
+                    ? <DrawerNav check={checkAuthorization}/>
+                    : <StackNav check={checkAuthorization}/>
+            }
+        </NavigationContainer>
     );
+}
+
+export default function Root() {
+    return (
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    )
 }
 

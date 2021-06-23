@@ -25,16 +25,16 @@ export default function Profile() {
 
     const dispatch = useDispatch()
 
+
+
     const {userToken} = useSelector(state => state);
 
-    const {user} = userToken
+    const {user , error , loading} = userToken
 
-    const {userUpdate} = useSelector(state => state);
 
-    const {loading, user: userUpdated, error} = userUpdate
-console.lo(error)
     useEffect(() => {
-        dispatch(checkToken());
+        dispatch(checkToken())
+
         setUsername(user.username)
         setEmail(user.email)
         setPhoneNumber(user.phone_number)
@@ -42,10 +42,8 @@ console.lo(error)
         setCity(user.city)
         setAddress(user.address)
 
-        if (userUpdated) {
-            alert('userUpdated ' + userUpdated)
-        }
-    }, [dispatch, userUpdated])
+
+    }, [dispatch])
 
 
     const SubmitHandler = () => {
@@ -59,6 +57,17 @@ console.lo(error)
             address,
             password,
         }));
+
+        const {userUpdate} = useSelector(state => state);
+
+        const {loading, user: userUpdated, error} = userUpdate
+
+        setUsername(userUpdated.username)
+        setEmail(userUpdated.email)
+        setPhoneNumber(userUpdated.phone_number)
+        setCountry(userUpdated.country)
+        setCity(userUpdated.city)
+        setAddress(userUpdated.address)
     }
 
     return (
