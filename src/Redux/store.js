@@ -1,6 +1,7 @@
 import thunk from 'redux-thunk';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {
+    userGoogleReducer,
     userLoginReducer,
     userRegisterReducer,
     userTokenReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     userRegister: userRegisterReducer,
     userToken: userTokenReducer,
     userUpdate: userUpdateReducer,
+    userGoogleLogin:userGoogleReducer
 });
 
 

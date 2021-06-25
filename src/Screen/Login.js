@@ -119,10 +119,8 @@ export default function Login({navigation,checkAuthorization}) {
                                     <TouchableOpacity>
                                         <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
                                     </TouchableOpacity>
-                                    {/*<TouchableOpacity style={{marginHorizontal: 10}}>*/}
-                                    {/*    <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>*/}
-                                    {/*</TouchableOpacity>*/}
-                                    <LoginWithGoogle/>
+
+                                    <LoginWithGoogle checkAuthorization={checkAuthorization}/>
                                 </View>
                             </View>
                         }
