@@ -45,36 +45,36 @@ function GoBackHandler() {
 
 function DrawerContent(props) {
 
+    // const {name, email, photoUrl} = route.params;
+    // const AvatarImg = photoUrl ? {uri: photoUrl} : require('../../assets/avatar-2.png');
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
 
     const LogoutHandler = () => {
 
-        dispatch(Logout())
+        dispatch(Logout());
 
-        dispatch(checkToken())
+        dispatch(checkToken());
 
-        props.check(false)
+        props.check(false);
 
-    }
-
-
+    };
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{flexDirection: 'row', marginTop: 15}}>
-                            <Avatar.Image
-                                source={require('../../assets/avatar-2.png')}
-                                size={50}
-                            />
-                            <View style={{marginLeft: 15, flexDirection: 'column'}}>
-                                <Title style={styles.title}>John Doe</Title>
-                                <Caption style={styles.caption}>es@j_doe.com</Caption>
-                            </View>
-                        </View>
+                        {/*<View style={{flexDirection: 'row', marginTop: 15}}>*/}
+                        {/*    <Avatar.Image*/}
+                        {/*        source={AvatarImg}*/}
+                        {/*        size={50}*/}
+                        {/*    />*/}
+                        {/*    <View style={{marginLeft: 15, flexDirection: 'column'}}>*/}
+                        {/*        <Title style={styles.title}>{name}</Title>*/}
+                        {/*        <Caption style={styles.caption}>{email}</Caption>*/}
+                        {/*    </View>*/}
+                        {/*</View>*/}
 
                     </View>
 
@@ -186,7 +186,7 @@ export default function DrawerNav({check}) {
     const Drawer = createDrawerNavigator();
     return (
 
-        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} check={check}/>}
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props=> <DrawerContent {...props} check={check}/>}
                           screenOptions={screenOptions}>
             <Drawer.Screen name="Home" component={Home} options={{
                 headerLeft: () => <></>,

@@ -13,10 +13,13 @@ import {FontAwesome5, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 import Bars from "../Components/Bars";
+import {Avatar, Caption, Title} from "react-native-paper";
 
 
-export default function Home({navigation}) {
 
+export default function Home ({navigation}) {
+    const {name, email, photoUrl} = route.params;
+    const AvatarImg = photoUrl ? {uri: photoUrl} : require('../../assets/avatar-2.png');
     const [starCount, setStarCount] = useState(2.5);
 
     const onStarRatingPress = (rating) => {
@@ -112,11 +115,22 @@ export default function Home({navigation}) {
 
                 <View style={GlobalStyle.content}>
                     <ScrollView>
+
                         <View style={styles.input}>
                             <TextInput
                                 placeholder='Search ...'
                             />
                             <Ionicons name="md-funnel" size={15} color="#6e9ded"/>
+                        </View>
+                        <View style={{flexDirection: 'row', marginTop: 15}}>
+                            <Avatar.Image
+                                source={AvatarImg}
+                                size={50}
+                            />
+                            <View style={{marginLeft: 15, flexDirection: 'column'}}>
+                                <Title style={styles.title}>{name}</Title>
+                                <Caption style={styles.caption}>{email}</Caption>
+                            </View>
                         </View>
                         <ScrollView horizontal={true}>
                             {DATATYPE.map((item) => {
@@ -210,6 +224,8 @@ export default function Home({navigation}) {
     );
 
 }
+
+
 const styles = StyleSheet.create({
 
     input: {

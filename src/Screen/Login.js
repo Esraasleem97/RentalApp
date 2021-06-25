@@ -9,8 +9,9 @@ import Messages from "../Components/Messages";
 import {userLoginHandler} from "../Redux/actions/userActions";
 import {USER_REFRESH} from "../Redux/constants/userConstants";
 import {FormStyle} from '../Style/FormStyle';
+import LoginWithGoogle from "../Components/LoginWithGoogle";
 
-export default function Login({navigation, checkAuthorization}) {
+export default function Login({navigation,checkAuthorization}) {
 
     const [userName, setUserName] = useState('');
 
@@ -21,6 +22,7 @@ export default function Login({navigation, checkAuthorization}) {
     const {userLogin} = useSelector((state) => state)
 
     const {loading, error, user} = userLogin
+
 
 
     useEffect(() => {
@@ -117,9 +119,10 @@ export default function Login({navigation, checkAuthorization}) {
                                     <TouchableOpacity>
                                         <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{marginHorizontal: 10}}>
-                                        <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
-                                    </TouchableOpacity>
+                                    {/*<TouchableOpacity style={{marginHorizontal: 10}}>*/}
+                                    {/*    <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>*/}
+                                    {/*</TouchableOpacity>*/}
+                                    <LoginWithGoogle/>
                                 </View>
                             </View>
                         }
