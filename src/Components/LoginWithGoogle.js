@@ -16,8 +16,8 @@ export default function LoginWithGoogle({checkAuthorization}) {
 
     const {userGoogleLogin} = useSelector(state => state)
 
-    const {user} = userGoogleLogin
-
+    const {user,error} = userGoogleLogin
+console.log(user,error);
     useEffect(() => {
         if (user) {
             checkAuthorization(true)
@@ -42,7 +42,7 @@ export default function LoginWithGoogle({checkAuthorization}) {
 
                 dispatch(googleLogin({
                     email: data.user.email,
-                    username: data.user.email,
+                    username: data.user.username,
                     password: data.user.email
                 }))
 

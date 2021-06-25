@@ -138,21 +138,7 @@ export default function Login({navigation,checkAuthorization}) {
 
 
 const styles = StyleSheet.create({
-    body: {
-        width: '100%',
-        height: "100%",
-        backgroundColor: '#1960d8',
 
-    },
-    container: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: '#eef5ff',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        overflow: 'hidden',
-        marginTop: 5
-    },
     content: {
         alignItems: 'center',
 
