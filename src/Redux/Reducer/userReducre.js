@@ -13,7 +13,7 @@ import {
     USER_REFRESH,
     USER_TOKEN_REQUESTS,
     USER_TOKEN_SUCCESS,
-    USER_TOKEN_FAILED, USER_GOOGLE_REQUESTS, USER_GOOGLE_FAILED,
+    USER_TOKEN_FAILED, USER_GOOGLE_REQUESTS, USER_GOOGLE_FAILED, USER_LOGOUT_FAILED, USER_LOGOUT_REQUESTS,
 
 } from "../constants/userConstants.js";
 
@@ -35,9 +35,6 @@ export const userLoginReducer = (state = {}, action) => {
             }
         case USER_LOGIN_FAILED:
             return {loading: false, error: action.payload}
-
-        case USER_LOGOUT:
-            return {}
 
         case USER_REFRESH:
             return {}
@@ -124,6 +121,22 @@ export const userGoogleReducer = (state = {}, action) => {
     }
 }
 
+
+export const userLogoutReducer = (state = {logout:false}, action) => {
+    switch (action.type) {
+        case USER_LOGOUT_REQUESTS:
+            return {loading: true, logout: false}
+
+        case USER_LOGOUT_FAILED:
+            return {loading: false, logout: false, error: action.payload}
+
+        case USER_LOGOUT:
+            return {loading: false, logout: true}
+
+        default:
+            return state
+    }
+}
 
 
 

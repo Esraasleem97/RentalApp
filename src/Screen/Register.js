@@ -35,14 +35,18 @@ export default function Register({checkAuthorization}) {
         }
 
     }, [user, dispatch])
+
     const SubmitRegisterHandler = () => {
+
         if (password == null || confirmPass == null) {
             return Alert.alert('Warning','Confirm Password OR Password can\'t be empty' )
         }
+
         if(password !== confirmPass ) {
 
             return  Alert.alert('Warning','Confirm Password should be match with Password')
         }
+
         dispatch(userRegisterHandler({
             username,email,phone_number:phoneNumber,password,
         }))

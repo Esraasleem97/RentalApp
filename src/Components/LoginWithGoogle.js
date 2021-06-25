@@ -42,7 +42,7 @@ console.log(user,error);
 
                 dispatch(googleLogin({
                     email: data.user.email,
-                    username: data.user.username,
+                    username: data.user.email,
                     password: data.user.email
                 }))
 

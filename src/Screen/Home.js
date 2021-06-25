@@ -13,7 +13,6 @@ import { Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 import Bars from "../Components/Bars";
-import {Avatar, Caption, Title} from "react-native-paper";
 
 
 

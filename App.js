@@ -10,6 +10,10 @@ import Splash from "./src/Screen/Splash";
 
 function App() {
 
+    const {userLogout} = useSelector(state => state);
+
+    const {logout} = userLogout
+
     const {userToken} = useSelector(state => state);
 
     const {user} = userToken
@@ -26,16 +30,17 @@ function App() {
     }
 
 
+    console.log('user App', user , 'logout' , logout)
+
     useEffect(() => {
 
         dispatch(checkToken());
 
-        if (user) {
+        if (user && user.success && user.token && !logout) {
             setIsAuthorized(true)
         } else {
             setIsAuthorized(false)
         }
-
 
         setTimeout(async () => {
             setLoading(false);
@@ -44,7 +49,7 @@ function App() {
         return () => {
             dispatch(checkToken());
         }
-    }, [dispatch])
+    }, [dispatch, logout])
 
 
     if (loading) {

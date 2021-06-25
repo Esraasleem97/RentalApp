@@ -1,21 +1,23 @@
 import React, {useEffect, useState} from "react";
 import SvgUri from "expo-svg-uri";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {useDispatch, useSelector} from "react-redux";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
-import {userLoginHandler} from "../Redux/actions/userActions";
+import {googleLogin, userLoginHandler} from "../Redux/actions/userActions";
 import {USER_REFRESH} from "../Redux/constants/userConstants";
 import {FormStyle} from '../Style/FormStyle';
-import LoginWithGoogle from "../Components/LoginWithGoogle";
 
-export default function Login({navigation,checkAuthorization}) {
+export default function Login({navigation, checkAuthorization}) {
 
     const [userName, setUserName] = useState('');
 
     const [password, setPassword] = useState('');
+
+    const [googleSubmitting, setGoogleSubmitting] = useState(false);
+
 
     const dispatch = useDispatch()
 
@@ -23,19 +25,47 @@ export default function Login({navigation,checkAuthorization}) {
 
     const {loading, error, user} = userLogin
 
+    const {userGoogleLogin} = useSelector(state => state)
+
+    const {user: userGoogleLoginInfo, loading: googleLoading} = userGoogleLogin
 
 
     useEffect(() => {
+
         dispatch({type: USER_REFRESH})
 
-        if (user && user.token) {
-            checkAuthorization(true)
+        if (!user) {
+            return checkAuthorization(false)
         }
-    }, [dispatch, user])
+
+        if (user && user.token) {
+            return checkAuthorization(true)
+        }
 
 
-    const SubmitHandler = () => {
+        if (userGoogleLoginInfo && userGoogleLoginInfo.google) {
+            return checkAuthorization(true)
+        }
+
+        return () => {
+            setUserName('')
+            setPassword('')
+            setGoogleSubmitting(false)
+        };
+
+    }, [dispatch, user, userGoogleLoginInfo])
+
+
+    const userNameAndPasswordSubmitHandler = () => {
         dispatch(userLoginHandler(userName, password))
+    }
+
+
+    const GoogleSubmitHandler = () => {
+        setGoogleSubmitting(true);
+
+        dispatch(googleLogin())
+
     }
 
     return (
@@ -49,9 +79,12 @@ export default function Login({navigation,checkAuthorization}) {
 
 
                     <View style={styles.content}>
-                        <SvgUri width="190" height="190"
+                        <SvgUri width="200" height="190"
                                 source={require('../../assets/car-rent.svg')}
                         />
+                        {/*<Image style={{width:'90%' ,height:150}}*/}
+                        {/*       source={require('../../assets/carHeader.png')}*/}
+                        {/*/>*/}
                         <View style={{
                             flexDirection: 'row',
                             marginBottom: 5,
@@ -88,7 +121,7 @@ export default function Login({navigation,checkAuthorization}) {
 
                         </View>
 
-                        {loading
+                        {loading || googleLoading
                             ? <Loader/>
                             :
                             <View style={GlobalStyle.btn_container}>
@@ -97,7 +130,7 @@ export default function Login({navigation,checkAuthorization}) {
                                     <Text style={{color: '#2266af', alignSelf: 'center', marginBottom: 10}}>Forget
                                         Password ?</Text></TouchableOpacity>
 
-                                <TouchableOpacity style={styles.button} onPress={SubmitHandler}>
+                                <TouchableOpacity style={styles.button} onPress={userNameAndPasswordSubmitHandler}>
                                     <Text style={styles.btn_text}>Login</Text>
                                 </TouchableOpacity>
 
@@ -120,7 +153,19 @@ export default function Login({navigation,checkAuthorization}) {
                                         <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
                                     </TouchableOpacity>
 
-                                    <LoginWithGoogle checkAuthorization={checkAuthorization}/>
+                                    {/* google login handler */}
+                                    {!googleSubmitting && (
+                                        <TouchableOpacity style={{marginHorizontal: 10}} google={true}
+                                                          onPress={GoogleSubmitHandler}>
+                                            <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
+                                        </TouchableOpacity>
+                                    )}
+                                    {googleSubmitting && (
+                                        <TouchableOpacity style={{marginHorizontal: 10}} google={true} disabled={true}>
+                                            <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
+                                        </TouchableOpacity>
+                                    )}
+
                                 </View>
                             </View>
                         }
