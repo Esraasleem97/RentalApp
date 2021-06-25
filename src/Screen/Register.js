@@ -4,7 +4,7 @@ import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableO
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {useSelector, useDispatch} from "react-redux";
-import {userRegisterHandler} from "../Redux/actions/userActions";
+import {googleLogin, userRegisterHandler} from "../Redux/actions/userActions";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
 import {USER_REFRESH} from "../Redux/constants/userConstants";
@@ -19,10 +19,14 @@ export default function Register({checkAuthorization}) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState(null);
     const [confirmPass, setConfirmPass] = useState(null);
-
+    const [googleSubmitting, setGoogleSubmitting] = useState(false);
     const {userRegister} = useSelector((state) => state);
 
     const {loading, error, user} = userRegister;
+
+    const {userGoogleLogin} = useSelector(state => state)
+
+    const {user: userGoogleLoginInfo, loading: googleLoading} = userGoogleLogin
 
     const dispatch = useDispatch();
 
@@ -33,9 +37,18 @@ export default function Register({checkAuthorization}) {
         if (user && user.token) {
             checkAuthorization(true)
         }
+        if (userGoogleLoginInfo && userGoogleLoginInfo.google) {
+            return checkAuthorization(true)
+        }
 
     }, [user, dispatch])
 
+    const GoogleSubmitHandler = () => {
+        setGoogleSubmitting(true);
+
+        dispatch(googleLogin())
+
+    }
     const SubmitRegisterHandler = () => {
 
         if (password == null || confirmPass == null) {
@@ -112,7 +125,7 @@ export default function Register({checkAuthorization}) {
                             {error && error.password && <Messages children={error.password}/>}
 
                         </View>
-                        {loading ?
+                        {loading || googleLoading ?
                             <Loader/>
                             :
                             <View style={GlobalStyle.btn_container}>
@@ -128,9 +141,19 @@ export default function Register({checkAuthorization}) {
                                     <TouchableOpacity>
                                         <MaterialCommunityIcons name='facebook' color='#1960d8' size={25}/>
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{marginHorizontal: 10}}>
-                                        <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
-                                    </TouchableOpacity>
+                                    {/* google login handler */}
+                                    {!googleSubmitting && (
+                                        <TouchableOpacity style={{marginHorizontal: 10}} google={true}
+                                                          onPress={GoogleSubmitHandler}>
+                                            <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
+                                        </TouchableOpacity>
+                                    )}
+                                    {googleSubmitting && (
+                                        <TouchableOpacity style={{marginHorizontal: 10}} google={true} disabled={true}>
+                                            <MaterialCommunityIcons name='google-plus' color='orange' size={35}/>
+                                        </TouchableOpacity>
+                                    )}
+
                                 </View>
                             </View>
                         }
