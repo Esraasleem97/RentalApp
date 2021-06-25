@@ -8,6 +8,7 @@ const Splash = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <View style={styles.content}>
+
                 <Text style={{fontSize: 18}}>GET CAR DETAILS</Text>
                 <SvgUri width="250" height="250"
                         source={require('../../assets/car-rent.svg')}

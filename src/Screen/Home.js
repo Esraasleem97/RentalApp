@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     SafeAreaView
 } from "react-native";
-import {FontAwesome5, Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 import Bars from "../Components/Bars";
@@ -17,10 +17,11 @@ import {Avatar, Caption, Title} from "react-native-paper";
 
 
 
+
 export default function Home ({navigation}) {
-    const {name, email, photoUrl} = route.params;
-    const AvatarImg = photoUrl ? {uri: photoUrl} : require('../../assets/avatar-2.png');
+
     const [starCount, setStarCount] = useState(2.5);
+
 
     const onStarRatingPress = (rating) => {
         setStarCount(rating);
@@ -104,17 +105,13 @@ export default function Home ({navigation}) {
     return (
 
         <View style={GlobalStyle.body}>
-            <View>
-                {/*<Text style={{color: '#fff', fontSize: 25}}>Car Rental</Text>*/}
-                {/*<Image style={styles.img_profile}*/}
-                {/*       source={require('../../assets/avatar-2.png')}*/}
-                {/*/>*/}
-            </View>
+
 
             <SafeAreaView style={GlobalStyle.container}>
 
                 <View style={GlobalStyle.content}>
-                    <ScrollView>
+
+                    <ScrollView showsVerticalScrollIndicator={false}>
 
                         <View style={styles.input}>
                             <TextInput
@@ -122,17 +119,10 @@ export default function Home ({navigation}) {
                             />
                             <Ionicons name="md-funnel" size={15} color="#6e9ded"/>
                         </View>
-                        <View style={{flexDirection: 'row', marginTop: 15}}>
-                            <Avatar.Image
-                                source={AvatarImg}
-                                size={50}
-                            />
-                            <View style={{marginLeft: 15, flexDirection: 'column'}}>
-                                <Title style={styles.title}>{name}</Title>
-                                <Caption style={styles.caption}>{email}</Caption>
-                            </View>
-                        </View>
-                        <ScrollView horizontal={true}>
+
+
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+
                             {DATATYPE.map((item) => {
                                 return (
                                     <TouchableOpacity style={styles.card} key={Math.random()}>

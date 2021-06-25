@@ -10,7 +10,6 @@ import Splash from "./src/Screen/Splash";
 
 function App() {
 
-
     const {userToken} = useSelector(state => state);
 
     const {user} = userToken
@@ -19,14 +18,16 @@ function App() {
 
     const [isAuthorized, setIsAuthorized] = useState(false);
 
-    const [splash, setSplash] = useState(true);
+    const [loading, setLoading] = useState(true);
 
 
     const checkAuthorization = (value) => {
         setIsAuthorized(value)
     }
 
+
     useEffect(() => {
+
         dispatch(checkToken());
 
         if (user) {
@@ -36,27 +37,27 @@ function App() {
         }
 
 
-        setTimeout(() => {
-            setSplash(false);
+        setTimeout(async () => {
+            setLoading(false);
         }, 2000)
 
-         return () => {
-             dispatch(checkToken());
-         }
+        return () => {
+            dispatch(checkToken());
+        }
     }, [dispatch])
 
 
-     if (splash) {
-         return <Splash/>
-     }
+    if (loading) {
+        return <Splash/>
+    }
 
     return (
 
         <NavigationContainer>
             {user && user.success
-                ? <DrawerNav check={checkAuthorization}  />
+                ? <DrawerNav check={checkAuthorization}/>
                 : isAuthorized
-                    ? <DrawerNav check={checkAuthorization}  />
+                    ? <DrawerNav check={checkAuthorization}/>
                     : <StackNav check={checkAuthorization}/>
             }
         </NavigationContainer>
