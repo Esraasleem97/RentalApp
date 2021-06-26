@@ -14,15 +14,20 @@ import {
 
 import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 import Details from "../Screen/Details";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {checkToken, Logout} from "../Redux/actions/userActions";
 
 function Header() {
 
     const navigation = useNavigation()
 
+    const {userToken} = useSelector(state => state);
+
+    const {user} = userToken
+
+
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile' ,  {user} )}>
             <Image style={styles.img_profile} source={require('../../assets/avatar-2.png')}/>
         </TouchableOpacity>
     )
@@ -48,6 +53,9 @@ function DrawerContent(props) {
 
     const dispatch = useDispatch()
 
+    const {userToken} = useSelector(state => state);
+
+    const {user} = userToken
 
     const LogoutHandler = () => {
 
@@ -71,8 +79,8 @@ function DrawerContent(props) {
                                 size={50}
                             />
                             <View style={{marginLeft: 15, flexDirection: 'column'}}>
-                                <Title style={styles.title}>John Doe</Title>
-                                <Caption style={styles.caption}>es@j_doe.com</Caption>
+                                <Title style={styles.title}>{user && user.username}</Title>
+                                <Caption style={styles.caption}>{user && user.email}</Caption>
                             </View>
                         </View>
 
@@ -102,7 +110,7 @@ function DrawerContent(props) {
                             )}
                             label="Profile"
                             onPress={() => {
-                                props.navigation.navigate('Profile')
+                                props.navigation.navigate('Profile', {user})
                             }}
                         />
                         <DrawerItem

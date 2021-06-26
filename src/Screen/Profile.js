@@ -10,7 +10,8 @@ import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
 
 
-export default function Profile() {
+export default function Profile(props) {
+
 
     const dispatch = useDispatch()
 
@@ -30,28 +31,26 @@ export default function Profile() {
 
     const [id, setId] = useState('');
 
-    const {userToken} = useSelector(state => state);
-
-    const {user} = userToken
-
     const {userUpdate} = useSelector(state => state);
 
     const {error, loading} = userUpdate
 
     useEffect(() => {
 
-        if (user) {
+        if (props.route && props.route.params && props.route.params.user) {
+            const {route: { params: { user } } } = props
             setUsername(user.username)
             setEmail(user.email)
             setPhoneNumber(user.phone_number)
             setCountry(user.country)
             setCity(user.city)
             setAddress(user.address)
+
             setId(user.id)
         } else {
             dispatch(checkToken())
         }
-    }, [user])
+    }, [dispatch])
 
 
     const SubmitHandler = () => {
