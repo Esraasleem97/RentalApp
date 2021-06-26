@@ -3,6 +3,7 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {
     userGoogleReducer,
     userLoginReducer,
+    userLogoutReducer,
     userRegisterReducer,
     userTokenReducer,
     userUpdateReducer
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     userRegister: userRegisterReducer,
     userToken: userTokenReducer,
     userUpdate: userUpdateReducer,
-    userGoogleLogin:userGoogleReducer
+    userGoogleLogin: userGoogleReducer,
+    userLogout: userLogoutReducer
 });
 
 

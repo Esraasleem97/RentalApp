@@ -11,15 +11,27 @@ import {
     USER_UPDATE_FAILED,
     USER_TOKEN_REQUESTS,
     USER_TOKEN_SUCCESS,
-    USER_TOKEN_FAILED ,
-    USER_GOOGLE_REQUESTS ,
-    USER_GOOGLE_FAILED
+    USER_TOKEN_FAILED,
+    USER_GOOGLE_REQUESTS,
+    USER_GOOGLE_FAILED,
+    USER_LOGOUT_REQUESTS,
+    USER_LOGOUT_FAILED, USER_REFRESH
 
 } from "../constants/userConstants.js";
 
 import axios from "axios";
-import {API_PROTECTION, GOOGLE_LOGIN, LOGIN, PROFILE, REGISTER, USER} from "../../Api";
+import {
+    ANDROID_GOOGLE_API,
+    API_PROTECTION,
+    GOOGLE_LOGIN,
+    IOS_GOOGLE_API,
+    LOGIN, LOGOUT,
+    PROFILE,
+    REGISTER,
+    USER
+} from "../../Api";
 import * as SecureStore from 'expo-secure-store';
+import * as Google from "expo-google-app-auth";
 
 
 /**
@@ -48,6 +60,13 @@ export const userLoginHandler = (username, password) => async (dispatch) => {
             type: USER_LOGIN_SUCCESS,
             payload: data
         })
+
+        dispatch({
+            type: USER_TOKEN_SUCCESS,
+            payload: data
+        })
+
+
         await SecureStore.deleteItemAsync('user')
 
         await SecureStore.setItemAsync('user', JSON.stringify(data))
@@ -92,6 +111,11 @@ export const userRegisterHandler = (userData = {}) => async (dispatch) => {
 
         dispatch({
             type: USER_LOGIN_SUCCESS,
+            payload: data
+        })
+
+        dispatch({
+            type: USER_TOKEN_SUCCESS,
             payload: data
         })
 
@@ -179,7 +203,6 @@ export const checkToken = () => async (dispatch) => {
         })
 
 
-
     } catch (e) {
 
         dispatch({
@@ -194,10 +217,20 @@ export const checkToken = () => async (dispatch) => {
 }
 
 
-export const googleLogin = (userData = {}) => async (dispatch) => {
+export const googleLogin = () => async (dispatch) => {
 
     try {
         dispatch({type: USER_GOOGLE_REQUESTS})
+
+
+        const googleConfig = {
+            iosClientId: `${IOS_GOOGLE_API}`,
+            androidClientId: `${ANDROID_GOOGLE_API}`,
+            scopes: ['profile', 'email']
+        };
+
+
+        const {user} = await Google.logInAsync(googleConfig)
 
         const config = {
             headers: {
@@ -206,7 +239,12 @@ export const googleLogin = (userData = {}) => async (dispatch) => {
             }
         }
 
-        const {data} = await axios.post(`${GOOGLE_LOGIN}`, userData , config);
+        const {data} = await axios.post(`${GOOGLE_LOGIN}`, {
+            email: user.email,
+            username: user.email,
+            password: user.email
+        }, config);
+
 
         dispatch({
             type: USER_TOKEN_SUCCESS,
@@ -232,8 +270,6 @@ export const googleLogin = (userData = {}) => async (dispatch) => {
 }
 
 
-
-
 /**
  *
  * @returns {(function(*, *): void)|*}
@@ -241,8 +277,41 @@ export const googleLogin = (userData = {}) => async (dispatch) => {
  */
 export const Logout = () => async (dispatch) => {
 
-    await SecureStore.deleteItemAsync('user')
 
-    dispatch({type: USER_LOGOUT})
+    try {
+        dispatch({type: USER_LOGOUT_REQUESTS})
 
+        let getUser = await SecureStore.getItemAsync('user');
+
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': API_PROTECTION,
+                Authorization: JSON.parse(getUser).token || null
+            }
+        }
+
+        await axios.get(`${LOGOUT}`, config);
+
+        await SecureStore.deleteItemAsync('user')
+
+        dispatch({type: USER_LOGOUT})
+
+        setTimeout(() => {
+            dispatch({type: USER_LOGOUT_REQUESTS})
+        }, 2000)
+
+        dispatch({type: USER_REFRESH})
+    } catch (e) {
+
+        dispatch({
+            type: USER_LOGOUT_FAILED,
+            payload: e.response && e.response.data.errors
+                ? e.response.data.errors
+                : e.message
+        })
+
+
+    }
 }

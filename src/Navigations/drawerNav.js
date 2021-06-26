@@ -1,6 +1,6 @@
 import {useNavigation} from "@react-navigation/native";
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Home from "../Screen/Home";
 import Profile from "../Screen/Profile";
 import {View, StyleSheet, TouchableOpacity, Image} from "react-native";
@@ -16,6 +16,7 @@ import {MaterialCommunityIcons as Icon} from '@expo/vector-icons';
 import Details from "../Screen/Details";
 import {useDispatch, useSelector} from "react-redux";
 import {checkToken, Logout} from "../Redux/actions/userActions";
+import Loader from "../Components/Loader";
 
 function Header() {
 
@@ -56,8 +57,12 @@ function DrawerContent(props) {
 
     const {user} = userToken
 
+    const [loadingWhileLogout, setLoadingWhileLogout] = useState(false)
 
     useEffect(() => {
+
+        setLoadingWhileLogout(false)
+
         if (!user) {
             dispatch(checkToken())
         }
@@ -65,11 +70,16 @@ function DrawerContent(props) {
 
     const LogoutHandler = () => {
 
+        setLoadingWhileLogout(true)
+
         dispatch(Logout());
 
-        dispatch(checkToken());
+        setTimeout(() => {
+            setLoadingWhileLogout(false)
 
-        props.check(false);
+            props.check(false);
+        }, 1000)
+
 
     };
     return (
@@ -171,14 +181,17 @@ function DrawerContent(props) {
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem
                     icon={({color, size}) => (
-                        <Icon
-                            name="exit-to-app"
-                            color={color}
-                            size={size}
-                        />
+
+                        loadingWhileLogout
+                            ? <Loader/>
+                            : <Icon
+                                name="exit-to-app"
+                                color={color}
+                                size={size}
+                            />
                     )}
                     label="Sign Out"
-                    onPress={LogoutHandler}/>
+                    onPress={!loadingWhileLogout && LogoutHandler}/>
             </Drawer.Section>
         </View>
     );
@@ -198,9 +211,9 @@ export default function DrawerNav({check}) {
     }
 
     const Drawer = createDrawerNavigator();
-    return (
 
-        <Drawer.Navigator initialRouteName="Home" drawerContent={props=> <DrawerContent {...props} check={check}/>}
+    return (
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} check={check}/>}
                           screenOptions={screenOptions}>
             <Drawer.Screen name="Home" component={Home} options={{
                 headerLeft: () => <></>,
