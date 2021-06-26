@@ -13,7 +13,7 @@ import {
     USER_REFRESH,
     USER_TOKEN_REQUESTS,
     USER_TOKEN_SUCCESS,
-    USER_TOKEN_FAILED,
+    USER_TOKEN_FAILED, USER_GOOGLE_REQUESTS, USER_GOOGLE_FAILED,
 
 } from "../constants/userConstants.js";
 
@@ -100,6 +100,30 @@ export const userTokenReducer = (state = {}, action) => {
             return state
     }
 }
+
+
+export const userGoogleReducer = (state = {}, action) => {
+    switch (action.type) {
+        case USER_GOOGLE_REQUESTS:
+            return {
+                loading: true
+            }
+        case USER_TOKEN_SUCCESS:
+            return {
+                loading: false,
+                user: action.payload
+            }
+        case USER_GOOGLE_FAILED:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        default:
+            return state
+    }
+}
+
 
 
 

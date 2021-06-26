@@ -12,11 +12,13 @@ import {
     USER_TOKEN_REQUESTS,
     USER_TOKEN_SUCCESS,
     USER_TOKEN_FAILED ,
+    USER_GOOGLE_REQUESTS ,
+    USER_GOOGLE_FAILED
 
 } from "../constants/userConstants.js";
 
 import axios from "axios";
-import {API_PROTECTION, LOGIN, PROFILE, REGISTER, USER} from "../../Api";
+import {API_PROTECTION, GOOGLE_LOGIN, LOGIN, PROFILE, REGISTER, USER} from "../../Api";
 import * as SecureStore from 'expo-secure-store';
 
 
@@ -189,6 +191,41 @@ export const checkToken = () => async (dispatch) => {
 
 
 }
+
+
+export const googleLogin = (userData = {}) => async (dispatch) => {
+
+    try {
+        dispatch({type: USER_GOOGLE_REQUESTS})
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-API-KEY': API_PROTECTION
+            }
+        }
+
+        const {data} = await axios.post(`${GOOGLE_LOGIN}`, userData , config);
+
+        dispatch({
+            type: USER_TOKEN_SUCCESS,
+            payload: data
+        })
+
+
+    } catch (e) {
+
+        dispatch({
+            type: USER_GOOGLE_FAILED,
+            payload: e.response && e.response.data.errors
+                ? e.response.data.errors
+                : e.message
+        })
+    }
+
+
+}
+
 
 
 
