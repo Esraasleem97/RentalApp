@@ -23,7 +23,7 @@ const Splash = ({ navigation }) => {
                 <Text style={styles.text}>With the included booking form above the fold, everyone visiting your page can
                     take action right away.</Text>
             </View>
-            <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Home')}>
                 <Text style={styles.btn_text}>Get Started</Text>
             </TouchableOpacity>
         </View>

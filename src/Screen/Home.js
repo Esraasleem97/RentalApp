@@ -13,10 +13,12 @@ import { Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 import Bars from "../Components/Bars";
+import {Avatar, Caption, Title} from "react-native-paper";
 
 
-export default function Home({navigation}) {
 
+
+export default function Home ({navigation}) {
 
     const [starCount, setStarCount] = useState(2.5);
 
@@ -108,14 +110,19 @@ export default function Home({navigation}) {
             <SafeAreaView style={GlobalStyle.container}>
 
                 <View style={GlobalStyle.content}>
+
                     <ScrollView showsVerticalScrollIndicator={false}>
+
                         <View style={styles.input}>
                             <TextInput
                                 placeholder='Search ...'
                             />
                             <Ionicons name="md-funnel" size={15} color="#6e9ded"/>
                         </View>
+
+
                         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+
                             {DATATYPE.map((item) => {
                                 return (
                                     <TouchableOpacity style={styles.card} key={Math.random()}>
@@ -207,6 +214,8 @@ export default function Home({navigation}) {
     );
 
 }
+
+
 const styles = StyleSheet.create({
 
     input: {

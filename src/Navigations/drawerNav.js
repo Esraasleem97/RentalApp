@@ -50,8 +50,7 @@ function GoBackHandler() {
 
 function DrawerContent(props) {
 
-
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const {userToken} = useSelector(state => state);
 
@@ -66,20 +65,19 @@ function DrawerContent(props) {
 
     const LogoutHandler = () => {
 
-        dispatch(Logout())
+        dispatch(Logout());
 
-        dispatch(checkToken())
+        dispatch(checkToken());
 
-        props.check(false)
+        props.check(false);
 
-    }
-
-
+    };
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
+
                         <View style={{flexDirection: 'row', marginTop: 15}}>
                             <Avatar.Image
                                 source={require('../../assets/avatar-2.png')}
@@ -90,6 +88,7 @@ function DrawerContent(props) {
                                 <Caption style={styles.caption}>{user && user.email}</Caption>
                             </View>
                         </View>
+
 
                     </View>
 
@@ -201,7 +200,7 @@ export default function DrawerNav({check}) {
     const Drawer = createDrawerNavigator();
     return (
 
-        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props} check={check}/>}
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props=> <DrawerContent {...props} check={check}/>}
                           screenOptions={screenOptions}>
             <Drawer.Screen name="Home" component={Home} options={{
                 headerLeft: () => <></>,
