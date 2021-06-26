@@ -48,10 +48,10 @@ export default function Profile() {
             setCity(user.city)
             setAddress(user.address)
             setId(user.id)
-        }else {
+        } else {
             dispatch(checkToken())
         }
-    }, [ user])
+    }, [user])
 
 
     const SubmitHandler = () => {

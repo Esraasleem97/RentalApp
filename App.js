@@ -66,7 +66,6 @@ function App() {
 
 export default function Root() {
     return (
-
         <Provider store={store}>
             <App/>
         </Provider>
