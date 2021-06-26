@@ -71,6 +71,7 @@ export default function Register({checkAuthorization}) {
     }, [user, dispatch])
 
     const GoogleSubmitHandler = () => {
+
         setGoogleSubmitting(true);
 
         dispatch(googleLogin())
