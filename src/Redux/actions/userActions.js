@@ -179,6 +179,7 @@ export const checkToken = () => async (dispatch) => {
         })
 
 
+
     } catch (e) {
 
         dispatch({
@@ -211,6 +212,10 @@ export const googleLogin = (userData = {}) => async (dispatch) => {
             type: USER_TOKEN_SUCCESS,
             payload: data
         })
+
+        await SecureStore.deleteItemAsync('user')
+
+        await SecureStore.setItemAsync('user', JSON.stringify(data))
 
 
     } catch (e) {
