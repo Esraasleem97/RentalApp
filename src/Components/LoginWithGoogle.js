@@ -8,8 +8,6 @@ import {googleLogin} from "../Redux/actions/userActions";
 
 
 export default function LoginWithGoogle({checkAuthorization}) {
-
-
     const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
     const dispatch = useDispatch()
