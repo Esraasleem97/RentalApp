@@ -1,6 +1,6 @@
 import {useNavigation} from "@react-navigation/native";
 import {createDrawerNavigator, DrawerContentScrollView, DrawerItem} from "@react-navigation/drawer";
-import React from "react";
+import React, {useEffect} from "react";
 import Home from "../Screen/Home";
 import Profile from "../Screen/Profile";
 import {View, StyleSheet, TouchableOpacity, Image} from "react-native";
@@ -27,7 +27,7 @@ function Header() {
 
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Profile' ,  {user} )}>
+        <TouchableOpacity onPress={() => navigation.navigate('Profile', {user})}>
             <Image style={styles.img_profile} source={require('../../assets/avatar-2.png')}/>
         </TouchableOpacity>
     )
@@ -56,6 +56,13 @@ function DrawerContent(props) {
     const {userToken} = useSelector(state => state);
 
     const {user} = userToken
+
+
+    useEffect(() => {
+        if (!user) {
+            dispatch(checkToken())
+        }
+    }, [user, dispatch])
 
     const LogoutHandler = () => {
 
