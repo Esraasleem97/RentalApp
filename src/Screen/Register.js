@@ -46,7 +46,9 @@ export default function Register({checkAuthorization}) {
     const [password, setPassword] = useState(null);
 
     const [confirmPass, setConfirmPass] = useState(null);
+
     const [googleSubmitting, setGoogleSubmitting] = useState(false);
+
     const {userRegister} = useSelector((state) => state);
 
     const {loading, error, user} = userRegister;
