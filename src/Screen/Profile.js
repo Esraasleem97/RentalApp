@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
-import {Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {Image, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {FormStyle} from "../Style/FormStyle";
 import FloatingLabelInput from "../Components/FloatingLabelInput";
@@ -11,6 +11,20 @@ import Messages from "../Components/Messages";
 
 
 export default function Profile(props) {
+
+    const wait = timeout => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    };
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
 
     const dispatch = useDispatch()
@@ -71,7 +85,10 @@ export default function Profile(props) {
     return (
         <SafeAreaView style={GlobalStyle.body}>
             <View style={GlobalStyle.container}>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false}
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+
+                >
                     <View style={FormStyle.content}>
                         <Image style={{width: 100, height: 100, marginVertical: 20}}
                                source={require('../../assets/avatar-2.png')}

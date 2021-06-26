@@ -1,6 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import SvgUri from "expo-svg-uri";
-import {SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {useDispatch, useSelector} from "react-redux";
@@ -12,12 +21,25 @@ import {FormStyle} from '../Style/FormStyle';
 
 export default function Login({navigation, checkAuthorization}) {
 
+    const wait = timeout => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    };
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
     const [userName, setUserName] = useState('');
 
     const [password, setPassword] = useState('');
 
     const [googleSubmitting, setGoogleSubmitting] = useState(false);
-
 
     const dispatch = useDispatch()
 
@@ -75,13 +97,18 @@ export default function Login({navigation, checkAuthorization}) {
 
             <View style={GlobalStyle.container}>
 
-                <ScrollView>
+                <ScrollView
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+                >
 
 
                     <View style={styles.content}>
-                        <SvgUri width="190" height="190"
+                        <SvgUri width="200" height="190"
                                 source={require('../../assets/car-rent.svg')}
                         />
+                        {/*<Image style={{width:'90%' ,height:150}}*/}
+                        {/*       source={require('../../assets/carHeader.png')}*/}
+                        {/*/>*/}
                         <View style={{
                             flexDirection: 'row',
                             marginBottom: 5,
@@ -180,21 +207,7 @@ export default function Login({navigation, checkAuthorization}) {
 
 
 const styles = StyleSheet.create({
-    body: {
-        width: '100%',
-        height: "100%",
-        backgroundColor: '#1960d8',
 
-    },
-    container: {
-        height: '100%',
-        width: '100%',
-        backgroundColor: '#eef5ff',
-        borderTopLeftRadius: 40,
-        borderTopRightRadius: 40,
-        overflow: 'hidden',
-        marginTop: 5
-    },
     content: {
         alignItems: 'center',
 

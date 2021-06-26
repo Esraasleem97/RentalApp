@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import {
     ScrollView,
     View,
@@ -7,24 +7,37 @@ import {
     Image,
     TextInput,
     TouchableOpacity,
-    SafeAreaView
+    SafeAreaView, RefreshControl
 } from "react-native";
-import { Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 import Bars from "../Components/Bars";
 
 
+export default function Home({navigation}) {
 
 
-export default function Home ({navigation}) {
+    const wait = timeout => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    };
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
     const [starCount, setStarCount] = useState(2.5);
-
 
     const onStarRatingPress = (rating) => {
         setStarCount(rating);
     }
+
 
     const DATATYPE = [
         {id: 1, icon: 'car-cog', name: 'cog'},
@@ -110,7 +123,9 @@ export default function Home ({navigation}) {
 
                 <View style={GlobalStyle.content}>
 
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+                    >
 
                         <View style={styles.input}>
                             <TextInput
@@ -120,7 +135,7 @@ export default function Home ({navigation}) {
                         </View>
 
 
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
                             {DATATYPE.map((item) => {
                                 return (

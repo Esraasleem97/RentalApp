@@ -1,6 +1,6 @@
 import React from "react";
 import SvgUri from "expo-svg-uri";
-import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity, View,Image} from "react-native";
 import {Ionicons} from '@expo/vector-icons';
 
 
@@ -9,23 +9,23 @@ const Splash = ({ navigation }) => {
         <View style={styles.container}>
             <View style={styles.content}>
 
-                <Text style={{fontSize: 18}}>GET CAR DETAILS</Text>
-                <SvgUri width="250" height="250"
-                        source={require('../../assets/car-rent.svg')}
-                />
-                <View style={{flexDirection: 'row', marginBottom: 25, width: 200, justifyContent: 'space-between'}}>
-                    <Ionicons name="code-working" size={15} color="#6e9ded"/>
-                    <Ionicons name="cog" size={15} color="#6e9ded"/>
-                    <Ionicons name="construct" size={15} color="#6e9ded"/>
-                    <Ionicons name="speedometer" size={15} color="#6e9ded"/>
-                    <Ionicons name="car" size={15} color="#6e9ded"/>
-                </View>
-                <Text style={styles.text}>With the included booking form above the fold, everyone visiting your page can
-                    take action right away.</Text>
+                {/*<Text style={{fontSize: 18}}>GET CAR DETAILS</Text>*/}
+                {/*<SvgUri width="250" height="250"*/}
+                {/*        source={require('../../assets/car-rent.svg')}*/}
+                {/*/>*/}
+                {/*<View style={{flexDirection: 'row', marginBottom: 25, width: 200, justifyContent: 'space-between'}}>*/}
+                {/*    <Ionicons name="code-working" size={15} color="#6e9ded"/>*/}
+                {/*    <Ionicons name="cog" size={15} color="#6e9ded"/>*/}
+                {/*    <Ionicons name="construct" size={15} color="#6e9ded"/>*/}
+                {/*    <Ionicons name="speedometer" size={15} color="#6e9ded"/>*/}
+                {/*    <Ionicons name="car" size={15} color="#6e9ded"/>*/}
+                {/*</View>*/}
+                {/*<Text style={styles.text}>With the included booking form above the fold, everyone visiting your page can*/}
+                {/*    take action right away.</Text>*/}
+
+                <Image style={{height: '50%', width:'100%',}} source={require('../../assets/Splash-1.png')}/>
             </View>
-            <TouchableOpacity style={styles.button}  onPress={() => navigation.navigate('Home')}>
-                <Text style={styles.btn_text}>Get Started</Text>
-            </TouchableOpacity>
+
         </View>
     )};
 
@@ -40,12 +40,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     content: {
-        height: '90%',
+        height: '100%',
+        width:'100%',
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#eef5ff',
-        borderBottomLeftRadius: 40,
-        borderBottomRightRadius: 40,
+        // borderBottomLeftRadius: 40,
+        // borderBottomRightRadius: 40,
 
     },
     text: {

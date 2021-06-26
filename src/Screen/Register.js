@@ -1,6 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import SvgUri from "expo-svg-uri";
-import {Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {
+    Alert,
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {useSelector, useDispatch} from "react-redux";
@@ -13,11 +23,28 @@ import {FormStyle} from "../Style/FormStyle";
 
 export default function Register({checkAuthorization}) {
 
+    const wait = timeout => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    };
+
+    const [refreshing, setRefreshing] = useState(false);
+
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
     const [username, setUsername] = useState('');
+
     const [email, setEmail] = useState('');
+
     const [phoneNumber, setPhoneNumber] = useState('');
+
     const [password, setPassword] = useState(null);
+
     const [confirmPass, setConfirmPass] = useState(null);
 
     const {userRegister} = useSelector((state) => state);
@@ -48,14 +75,20 @@ export default function Register({checkAuthorization}) {
         }
 
         dispatch(userRegisterHandler({
-            username,email,phone_number:phoneNumber,password,
+            username,
+            email,
+            phone_number:phoneNumber,
+            password
         }))
 
     }
     return (
         <SafeAreaView style={GlobalStyle.body}>
             <View style={GlobalStyle.container}>
-                <ScrollView>
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
+                >
                     <View style={FormStyle.content}>
 
                         <SvgUri width="190" height="190"
