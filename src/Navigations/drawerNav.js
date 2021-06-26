@@ -74,12 +74,9 @@ function DrawerContent(props) {
 
         dispatch(Logout());
 
-        setTimeout(() => {
-            setLoadingWhileLogout(false)
+        setLoadingWhileLogout(false)
 
-            props.check(false);
-        }, 1000)
-
+        props.check(false);
 
     };
     return (
