@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 
-import {Image, RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {Image, SafeAreaView, Text, TouchableOpacity, View} from "react-native";
 import {GlobalStyle} from "../Style/GlobalStyle";
 import {FormStyle} from "../Style/FormStyle";
 import FloatingLabelInput from "../Components/FloatingLabelInput";
@@ -8,24 +8,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {checkToken, UserUpdateHandler} from "../Redux/actions/userActions";
 import Loader from "../Components/Loader";
 import Messages from "../Components/Messages";
+import RefreshHandler from "../Components/RefreshHandler";
 
 
 export default function Profile(props) {
-
-    const wait = timeout => {
-        return new Promise(resolve => {
-            setTimeout(resolve, timeout);
-        });
-    };
-
-    const [refreshing, setRefreshing] = useState(false);
-
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-
-        wait(2000).then(() => setRefreshing(false));
-    }, []);
-
 
     const dispatch = useDispatch()
 
@@ -85,10 +71,8 @@ export default function Profile(props) {
     return (
         <SafeAreaView style={GlobalStyle.body}>
             <View style={GlobalStyle.container}>
-                <ScrollView showsVerticalScrollIndicator={false}
-                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
 
-                >
+                <RefreshHandler  template={
                     <View style={FormStyle.content}>
                         <Image style={{width: 100, height: 100, marginVertical: 20}}
                                source={require('../../assets/avatar-2.png')}
@@ -157,8 +141,8 @@ export default function Profile(props) {
                                 <Text style={FormStyle.btn_text}>Update</Text>
                             </TouchableOpacity>
                         }
-                    </View>
-                </ScrollView>
+                    </View>}/>
+
 
             </View>
         </SafeAreaView>
