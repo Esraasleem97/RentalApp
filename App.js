@@ -30,8 +30,6 @@ function App() {
     }
 
 
-    console.log('user App', user , 'logout' , logout)
-
     useEffect(() => {
 
         dispatch(checkToken());

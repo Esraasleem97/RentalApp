@@ -9,22 +9,23 @@ import {
     TouchableOpacity,
     SafeAreaView
 } from "react-native";
-import { Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
+import {Ionicons, MaterialCommunityIcons} from '@expo/vector-icons';
 import StarRating from 'react-native-star-rating';
 import {GlobalStyle} from '../Style/GlobalStyle'
 import Bars from "../Components/Bars";
+import RefreshHandler from "../Components/RefreshHandler";
 
 
 
+export default function Home({navigation}) {
 
-export default function Home ({navigation}) {
 
     const [starCount, setStarCount] = useState(2.5);
-
 
     const onStarRatingPress = (rating) => {
         setStarCount(rating);
     }
+
 
     const DATATYPE = [
         {id: 1, icon: 'car-cog', name: 'cog'},
@@ -110,100 +111,99 @@ export default function Home ({navigation}) {
 
                 <View style={GlobalStyle.content}>
 
-                    <ScrollView showsVerticalScrollIndicator={false}>
+                    <RefreshHandler template={
+                        <View>
 
-                        <View style={styles.input}>
-                            <TextInput
-                                placeholder='Search ...'
-                            />
-                            <Ionicons name="md-funnel" size={15} color="#6e9ded"/>
-                        </View>
+                            <View style={styles.input}>
+                                <TextInput
+                                    placeholder='Search ...'
+                                />
+                                <Ionicons name="md-funnel" size={15} color="#6e9ded"/>
+                            </View>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
+                                {DATATYPE.map((item) => {
+                                    return (
+                                        <TouchableOpacity style={styles.card} key={Math.random()}>
+                                            <MaterialCommunityIcons name={item.icon} size={30} color="#000"/>
+                                            <Text style={styles.card_text}>{item.name}</Text>
+                                        </TouchableOpacity>
+                                    )
+                                })}
 
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                            </ScrollView>
+                            {/*<Text style={styles.title}>Booking Car Now </Text>*/}
+                            <View style={styles.tabs}>
+                                <TouchableOpacity><Text style={[styles.tab, styles.active]}>All
+                                    Cars</Text></TouchableOpacity>
+                                <TouchableOpacity><Text style={styles.tab}>Latest Cars</Text></TouchableOpacity>
+                                <TouchableOpacity><Text style={styles.tab}>Recently Arrived</Text></TouchableOpacity>
+                            </View>
+                            <SafeAreaView style={styles.section_pro}>
+                                {DATABASE.map((item) => {
+                                    return (
+                                        <TouchableOpacity
+                                            key={Math.random()}
+                                            style={styles.card_pro}>
+                                            <View style={styles.card_content}>
+                                                <View style={styles.card_pro_img}>
+                                                    <Image
+                                                        style={{width: '100%', height: 65}}
+                                                        source={item.img}/>
+                                                </View>
+                                                <View
+                                                    style={{
+                                                        justifyContent: 'flex-start',
+                                                        width: "100%",
+                                                        paddingHorizontal: 10
+                                                    }}>
+                                                    <Text style={{
+                                                        color: '#1960d8',
+                                                        fontWeight: 'bold'
+                                                    }}>{item.name}</Text>
+                                                    <Text
+                                                        style={{fontSize: 10, color: '#999'}}>Category
+                                                        : {item.category}</Text>
 
-                            {DATATYPE.map((item) => {
-                                return (
-                                    <TouchableOpacity style={styles.card} key={Math.random()}>
-                                        <MaterialCommunityIcons name={item.icon} size={30} color="#000"/>
-                                        <Text style={styles.card_text}>{item.name}</Text>
-                                    </TouchableOpacity>
-                                )
-                            })}
-
-                        </ScrollView>
-                        {/*<Text style={styles.title}>Booking Car Now </Text>*/}
-                        <View style={styles.tabs}>
-                            <TouchableOpacity><Text style={[styles.tab, styles.active]}>All
-                                Cars</Text></TouchableOpacity>
-                            <TouchableOpacity><Text style={styles.tab}>Latest Cars</Text></TouchableOpacity>
-                            <TouchableOpacity><Text style={styles.tab}>Recently Arrived</Text></TouchableOpacity>
-                        </View>
-                        <SafeAreaView style={styles.section_pro}>
-                            {DATABASE.map((item) => {
-                                return (
-                                    <TouchableOpacity
-                                        key={Math.random()}
-                                        style={styles.card_pro}>
-                                        <View style={styles.card_content}>
-                                            <View style={styles.card_pro_img}>
-                                                <Image
-                                                    style={{width: '100%', height: 65}}
-                                                    source={item.img}/>
-                                            </View>
-                                            <View
-                                                style={{
-                                                    justifyContent: 'flex-start',
+                                                </View>
+                                                <View style={{
+                                                    flexDirection: 'row',
+                                                    justifyContent: 'space-between',
                                                     width: "100%",
-                                                    paddingHorizontal: 10
+                                                    paddingHorizontal: 10,
+                                                    paddingVertical: 5
                                                 }}>
-                                                <Text style={{
-                                                    color: '#1960d8',
-                                                    fontWeight: 'bold'
-                                                }}>{item.name}</Text>
-                                                <Text
-                                                    style={{fontSize: 10, color: '#999'}}>Category
-                                                    : {item.category}</Text>
+
+                                                    <Text style={{color: '#888', fontSize: 12}}>{item.price}</Text>
+                                                    <Text style={{color: '#888', fontSize: 12}}>{item.year}</Text>
+                                                </View>
+                                                <View style={styles.star}>
+                                                    <StarRating
+                                                        disabled={false}
+                                                        maxStars={5}
+                                                        rating={starCount}
+                                                        selectedStar={(rating) => onStarRatingPress(rating)}
+                                                        fullStarColor={'orange'}
+                                                        starSize={13}
+                                                    />
+                                                </View>
+                                                <TouchableOpacity style={styles.btn}
+                                                                  onPress={() => navigation.navigate('Details')}>
+
+                                                    <Text
+                                                        style={{color: '#1960d8', fontSize: 12}}
+                                                    >Booking Now</Text></TouchableOpacity>
 
                                             </View>
-                                            <View style={{
-                                                flexDirection: 'row',
-                                                justifyContent: 'space-between',
-                                                width: "100%",
-                                                paddingHorizontal: 10,
-                                                paddingVertical: 5
-                                            }}>
+                                        </TouchableOpacity>
 
-                                                <Text style={{color: '#888', fontSize: 12}}>{item.price}</Text>
-                                                <Text style={{color: '#888', fontSize: 12}}>{item.year}</Text>
-                                            </View>
-                                            <View style={styles.star}>
-                                                <StarRating
-                                                    disabled={false}
-                                                    maxStars={5}
-                                                    rating={starCount}
-                                                    selectedStar={(rating) => onStarRatingPress(rating)}
-                                                    fullStarColor={'orange'}
-                                                    starSize={13}
-                                                />
-                                            </View>
-                                            <TouchableOpacity style={styles.btn}
-                                                              onPress={() => navigation.navigate('Details')}>
+                                    )
+                                })}
 
-                                                <Text
-                                                    style={{color: '#1960d8', fontSize: 12}}
-                                                >Booking Now</Text></TouchableOpacity>
+                            </SafeAreaView>
 
-                                        </View>
-                                    </TouchableOpacity>
-
-                                )
-                            })}
-
-                        </SafeAreaView>
-
-                    </ScrollView>
-
+                        </View>
+                    }/>
                 </View>
                 <Bars navigation={navigation}/>
             </SafeAreaView>

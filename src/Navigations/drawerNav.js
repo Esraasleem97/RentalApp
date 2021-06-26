@@ -73,10 +73,10 @@ function DrawerContent(props) {
         setLoadingWhileLogout(true)
 
         dispatch(Logout());
+
         setLoadingWhileLogout(false)
 
         props.check(false);
-
 
     };
     return (
