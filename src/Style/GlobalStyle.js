@@ -6,8 +6,8 @@ export const GlobalStyle = StyleSheet.create({
         width: '100%',
         height: "100%",
         backgroundColor: '#1960d8',
-
     },
+
     container: {
         height: '100%',
         width: '100%',
@@ -15,27 +15,27 @@ export const GlobalStyle = StyleSheet.create({
         borderTopLeftRadius: 40,
         borderTopRightRadius: 40,
         overflow: 'hidden',
-        marginVertical: 5
+        marginVertical: 10
     },
     content: {
         width: '100%',
-        marginBottom:60
+        marginBottom: 60
 
     },
-    icon : {
-        marginVertical:15,
-        flexDirection:'row',
-        alignItems:'center'
+    icon: {
+        marginVertical: 15,
+        flexDirection: 'row',
+        alignItems: 'center'
     },
-    border:{
+    border: {
         borderTopWidth: 1,
-        borderTopColor:'#cecaca',
-        width:30,
-        marginHorizontal:5
+        borderTopColor: '#cecaca',
+        width: 30,
+        marginHorizontal: 5
 
     },
-    btn_container : {
-        width:'100%',
+    btn_container: {
+        width: '100%',
         alignItems: 'center'
     }
 });

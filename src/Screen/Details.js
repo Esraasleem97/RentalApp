@@ -4,7 +4,9 @@ import {SliderBox} from "react-native-image-slider-box";
 import StarRating from "react-native-star-rating";
 import {FontAwesome5, SimpleLineIcons, MaterialCommunityIcons} from '@expo/vector-icons';
 import {GlobalStyle} from '../Style/GlobalStyle';
-import Bars from "../Components/Bars";
+
+
+
 export default class Details extends Component {
 
 
@@ -14,7 +16,7 @@ export default class Details extends Component {
             images: [
                 require('../../assets/car-pro-1.png'),
                 require('../../assets/car-pro-2.png'), // Network image
-                require('../../assets/car-pro-3.png'),          // Local image
+                require('../../assets/car-pro-3.png'), // Local image
             ],
             starCount: 2.5
         };
@@ -101,8 +103,7 @@ export default class Details extends Component {
                                             starSize={13}
                                         />
                                     </View>
-                                    <TouchableOpacity style={styles.btn}><Text style={{color: '#fff'}}>Book
-                                        Now</Text></TouchableOpacity>
+                                    <TouchableOpacity style={styles.btn}><Text style={{color: '#fff'}}>Book Now</Text></TouchableOpacity>
                                 </View>
                             </View>
 

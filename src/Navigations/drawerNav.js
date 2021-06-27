@@ -214,7 +214,7 @@ export default function DrawerNav({check}) {
                           screenOptions={screenOptions}>
             <Drawer.Screen name="Home" component={Home} options={{
                 headerLeft: () => <></>,
-                headerTitleStyle: {marginHorizontal: -35, fontSize: 22}
+                headerTitleStyle: {marginHorizontal: -35, fontSize: 22 , marginTop:10}
             }}/>
             <Drawer.Screen name="Profile" component={Profile} options={option}/>
 
@@ -270,8 +270,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
     },
     img_profile: {
-        width: 45,
-        height: 45,
+        marginTop:10,
+        width: 40,
+        height: 40,
         borderRadius: 100,
         marginHorizontal: 30
     },
